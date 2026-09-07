@@ -10,8 +10,13 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc -b --pretty false",
+    "build": "npm run typecheck && vite build",
+    "check": "npm run format:check && npm run lint && npm run build",
     "preview": "vite preview"
   },
   "dependencies": {

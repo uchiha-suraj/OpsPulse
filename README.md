@@ -281,29 +281,69 @@ Documentation should explain why decisions were made, how execution and data flo
 - Node.js 24.18.0
 - npm 10.4.0
 
-The current repository contains an initial React, TypeScript, and Vite scaffold. Project setup is not considered complete until its roadmap step is reviewed and approved.
-
-Install current dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-Start the current development environment:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-Current scaffold commands:
+### Quality commands
+
+Format supported files:
+
+```bash
+npm run format
+```
+
+Check formatting without changing files:
+
+```bash
+npm run format:check
+```
+
+Run strict, type-aware ESLint checks:
 
 ```bash
 npm run lint
+```
+
+Apply safe ESLint fixes:
+
+```bash
+npm run lint:fix
+```
+
+Run TypeScript compiler checks:
+
+```bash
+npm run typecheck
+```
+
+Create a type-checked production build:
+
+```bash
 npm run build
+```
+
+Run the complete current quality workflow:
+
+```bash
+npm run check
+```
+
+Preview the production build:
+
+```bash
 npm run preview
 ```
 
-Formatting, dedicated type-checking, unit tests, component tests, and end-to-end commands will be added only during their approved tooling and testing steps.
+The combined `check` command runs formatting validation, ESLint, TypeScript checking, and the production build. Unit, component, and end-to-end test commands will be added during their approved testing steps.
 
 ## Development principles
 

@@ -3,7 +3,7 @@
 ## Document status
 
 - Roadmap step: Step 2 — Project Requirements and Scope Documentation
-- Status: Draft awaiting review
+- Status: Approved on September 7, 2026
 - Version covered: Version 1
 - Product: OpsPulse — Incident Management Dashboard
 - Owner: Suraj Adhikary
@@ -822,14 +822,14 @@ Risk: Installing the full proposed stack immediately may increase complexity bef
 
 Mitigation: Add dependencies only during the roadmap step that requires them, with purpose, alternatives, and ownership documented.
 
-## Step 2 completion condition
+## Step 2 completion
 
-Step 2 remains in progress until:
+Step 2 was completed and approved by Suraj on September 7, 2026.
 
-- `PROJECT_OVERVIEW.md` is reviewed.
-- This requirements document is reviewed.
-- Confirmed decisions are recorded in `DECISIONS.md`.
-- Relevant Notion pages are updated.
-- Suraj explicitly confirms that Step 2 is complete.
+- `PROJECT_OVERVIEW.md` was reviewed and approved.
+- This requirements document was reviewed and approved.
+- Relevant Notion pages were updated.
+- The Version 1 scope was frozen around the three core workflows.
+- `DECISIONS.md` was intentionally left without entries until a future project change or trade-off requires a local record.
 
-Step 3 must not begin before that confirmation.
+Step 3 — React, TypeScript and GitHub Setup is approved to begin.

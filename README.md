@@ -11,8 +11,8 @@ The project is being built and owned by [Suraj Adhikary](https://www.heysuraj.de
 | Area | Status |
 | --- | --- |
 | Figma design | Completed and approved as the implementation baseline |
-| Version 1 requirements and scope | In progress |
-| Application implementation | Not started under the approved roadmap |
+| Version 1 requirements and scope | Completed and approved |
+| Application implementation | Step 3 project setup in progress |
 | Repository visibility | Private through Version 2 |
 | Public/open-source preparation | Deferred until Version 2 is completed and reviewed |
 
@@ -265,7 +265,7 @@ No public or open-source status is implied before that review is complete.
 
 - [Project overview](docs/PROJECT_OVERVIEW.md)
 - [Version 1 requirements](docs/REQUIREMENTS.md)
-- Decision log: `docs/DECISIONS.md` — pending
+- Decision log: `docs/DECISIONS.md` — to be added when a future project change or trade-off requires a local record
 - Architecture: `docs/ARCHITECTURE.md` — pending its roadmap step
 - Data flow: `docs/DATA_FLOW.md` — pending its roadmap step
 - Component inventory: `docs/COMPONENTS.md` — pending its roadmap step
@@ -315,10 +315,10 @@ Formatting, dedicated type-checking, unit tests, component tests, and end-to-end
 ## Current roadmap position
 
 - Step 1 — Figma Design: completed
-- Step 2 — Project Requirements and Scope Documentation: in progress
-- Step 3 — React, TypeScript and GitHub Setup: not approved to begin
+- Step 2 — Project Requirements and Scope Documentation: completed
+- Step 3 — React, TypeScript and GitHub Setup: in progress
 
-Step 3 will not begin until the Step 2 documents are reviewed and Suraj explicitly confirms that Step 2 is complete.
+Suraj approved the Version 1 requirements and explicitly confirmed Step 2 complete on September 7, 2026.
 
 ## Author
 

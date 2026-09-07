@@ -3,8 +3,8 @@
 ## Document status
 
 - Roadmap step: Step 2 — Project Requirements and Scope Documentation
-- Status: Draft awaiting final approval
-- Implementation status: Not started
+- Status: Approved on September 7, 2026
+- Implementation status: Step 3 — React, TypeScript and GitHub Setup in progress
 - Design status: Approved as the implementation baseline
 - Version covered: Version 1
 
@@ -409,7 +409,7 @@ Version 1 succeeds when:
 ## Current status
 
 - Step 1 — Figma Design: completed
-- Step 2 — Project Requirements and Scope Documentation: in progress
-- Step 3 — React, TypeScript and GitHub Setup: not approved to begin
+- Step 2 — Project Requirements and Scope Documentation: completed and approved
+- Step 3 — React, TypeScript and GitHub Setup: in progress
 
-Step 2 must not be marked complete until its documents are reviewed and Suraj explicitly confirms completion.
+Suraj explicitly confirmed Step 2 complete on September 7, 2026. `DECISIONS.md` will remain without entries until a future project change or trade-off requires a local decision record.

@@ -8,13 +8,13 @@ The project is being built and owned by [Suraj Adhikary](https://www.heysuraj.de
 
 ## Project status
 
-| Area                             | Status                                                |
-| -------------------------------- | ----------------------------------------------------- |
-| Figma design                     | Completed and approved as the implementation baseline |
-| Version 1 requirements and scope | Completed and approved                                |
-| Application implementation       | Base setup completed through Step 3                   |
-| Repository visibility            | Private through Version 2                             |
-| Public/open-source preparation   | Deferred until Version 2 is completed and reviewed    |
+| Area                             | Status                                                  |
+| -------------------------------- | ------------------------------------------------------- |
+| Figma design                     | Completed and approved as the implementation baseline   |
+| Version 1 requirements and scope | Completed and approved                                  |
+| Application implementation       | Base setup and quality tooling completed through Step 4 |
+| Repository visibility            | Private through Version 2                               |
+| Public/open-source preparation   | Deferred until Version 2 is completed and reviewed      |
 
 This README describes the approved product direction. A listed capability should not be interpreted as implemented until its roadmap step is marked complete.
 
@@ -362,7 +362,8 @@ The combined `check` command runs formatting validation, ESLint, TypeScript chec
 - Step 1 — Figma Design: completed
 - Step 2 — Project Requirements and Scope Documentation: completed
 - Step 3 — React, TypeScript and GitHub Setup: completed
-- Step 4 — Code Quality and Development Tooling: not approved to begin
+- Step 4 — Code Quality and Development Tooling: completed
+- Step 5 — Project Architecture and Folder Structure: not approved to begin
 
 Suraj approved the Version 1 requirements and explicitly confirmed Step 2 complete on September 7, 2026.
 

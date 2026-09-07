@@ -1,75 +1,327 @@
-# React + TypeScript + Vite
+# OpsPulse — Incident Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> Monitor, coordinate, and resolve incidents faster.
 
-Currently, two official plugins are available:
+OpsPulse is a production-style frontend portfolio project for monitoring service health, finding incidents, coordinating incident response, and documenting resolutions.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The project is being built and owned by [Suraj Adhikary](https://www.heysuraj.dev/), a frontend/software engineer focused on React, TypeScript, and maintainable user-interface architecture.
 
-## React Compiler
+## Project status
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Area | Status |
+| --- | --- |
+| Figma design | Completed and approved as the implementation baseline |
+| Version 1 requirements and scope | In progress |
+| Application implementation | Not started under the approved roadmap |
+| Repository visibility | Private through Version 2 |
+| Public/open-source preparation | Deferred until Version 2 is completed and reviewed |
 
-## Expanding the ESLint configuration
+This README describes the approved product direction. A listed capability should not be interpreted as implemented until its roadmap step is marked complete.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Product purpose
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+During production incidents, engineering teams often collect information from monitoring, deployment, communication, and service-health systems. Fragmented information makes it harder to understand impact, coordinate responders, communicate progress, and preserve an accurate incident record.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+OpsPulse brings the essential incident-response information into one interface.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The name represents:
 
+- **Ops:** engineering, DevOps, and production operations
+- **Pulse:** the current health of a company's technical systems
+
+## Target users
+
+- Site Reliability Engineers
+- DevOps Engineers
+- Incident Commanders
+- Engineering Managers
+- Software Engineers participating in incident response
+
+## Version 1 core workflows
+
+Version 1 is deliberately limited to three workflows.
+
+### Monitor production
+
+```text
+Open dashboard
+→ review active incidents
+→ check service health
+→ review incident metrics
+→ open a critical incident
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Find an incident
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```text
+Open incidents
+→ search or filter incidents
+→ sort and paginate results
+→ open incident details
 ```
+
+### Manage an incident
+
+```text
+Create incident
+→ assign severity and responders
+→ add timeline updates
+→ change incident status
+→ add internal notes
+→ resolve incident
+```
+
+## Version 1 scope
+
+### Operations dashboard
+
+- Critical incident banner
+- Active and resolved incident metrics
+- Mean time to acknowledge and resolve
+- Incident trend and severity-distribution charts
+- Service-health overview
+- Recent incident activity
+- Current on-call responders
+- Predefined date ranges
+
+### Incident discovery
+
+- Search
+- Status, severity, service, assignee, and date filters
+- Active-filter indicators and Clear Filters
+- Sorting and page-based pagination
+- URL-synchronized list state
+- Desktop table and mobile cards
+- Desktop column visibility
+
+### Incident management
+
+- Incident details
+- Create and edit incident
+- Assign commander and responders
+- Change active incident status
+- Add timeline updates
+- Add internal notes
+- Resolve incident
+- Local persistence
+- Validation and request feedback
+
+### Interface quality
+
+- Responsive desktop and mobile layouts
+- Dark and light themes
+- Keyboard navigation and visible focus states
+- Accessible labels and status presentation
+- Accessible chart summaries
+- Loading, empty, error, retry, offline, permission, optimistic-update, rollback, 404, and unexpected-error states
+- WCAG 2.2 AA target for primary workflows
+
+## Confirmed Version 1 decisions
+
+- The application is frontend-only.
+- Mock Service Worker simulates the API boundary.
+- Versioned local persistence retains successful demo changes.
+- Ananya Rao is the single predefined demo user.
+- Version 1 has no authentication or real authorization.
+- Primary navigation contains only Dashboard and Incidents.
+- Timeline, Notes, and Resolution are functional.
+- Version 1 has no notification centre.
+- No screen displays more than one Create Incident action.
+- Offline mode is read-only and does not queue mutations.
+
+## Demo user
+
+```text
+Name: Ananya Rao
+Role: SRE / Incident Responder
+Status: On call
+Initials: AR
+```
+
+Authentication and authorization are not implemented in Version 1. Permission-denied behaviour is a deliberately simulated interface scenario.
+
+## Proposed data flow
+
+```text
+React interface
+→ TanStack Query
+→ API service functions
+→ Mock Service Worker handlers
+→ seeded data and versioned local persistence
+```
+
+Components will not access browser persistence directly for incident records. The mock API layer will own seeded and persisted demo data so that a future backend can replace it without rewriting presentation components.
+
+Successful local changes will include:
+
+- Created incidents
+- Edited incident information
+- Commander and responder assignments
+- Status changes
+- Timeline updates
+- Internal notes
+- Resolution details
+
+A Reset Demo Data action will restore the original seeded dataset for portfolio reviewers.
+
+## State-ownership direction
+
+- **TanStack Query:** simulated API data, request state, and cache
+- **URL parameters:** incident search, filters, sorting, page, and page size
+- **React Hook Form and Zod:** form values and validation
+- **Zustand:** small global UI preferences only when justified
+- **Local component state:** temporary interface behaviour
+- **Derived calculations:** metrics and projections calculated from authoritative data
+- **Mock persistence layer:** durable demo records
+
+The same information must not be stored in multiple state systems without a documented reason.
+
+## Proposed technology stack
+
+- React
+- Vite
+- TypeScript with strict mode
+- React Router
+- TanStack Query and Query Devtools
+- TanStack Table
+- Zustand
+- React Hook Form
+- Zod
+- Recharts
+- Tailwind CSS
+- Accessible Radix UI or shadcn-style components
+- Lucide React
+- Mock Service Worker
+- Vitest
+- React Testing Library
+- Playwright
+- GitHub Actions
+- Vercel
+
+Packages will be introduced only when required by the active roadmap step. This list is a direction, not permission to install every dependency immediately.
+
+## Simulated behaviour
+
+Version 1 does not connect to real operational services.
+
+The following are simulated:
+
+- API requests, latency, and failures
+- Datadog alerts
+- Grafana dashboards and links
+- Slack incident channels
+- Service-health monitoring
+- On-call responder availability
+- Incident activity
+- Permission restrictions
+- Offline conditions
+- Optimistic failure and rollback
+
+No interface or documentation should imply that these are real integrations.
+
+## Out of scope for Version 1
+
+- Real backend or database
+- Real authentication or authorization
+- Multiple organizations or real multi-user accounts
+- Standalone Services page
+- Settings page
+- Notification centre
+- Real WebSockets or real-time collaboration
+- Offline mutation queue
+- Real Slack, Datadog, or Grafana integration
+- Email or push notifications
+- Complex role management
+- Billing or subscriptions
+- AI incident summaries
+- File uploads
+- Backend audit log
+- Separate admin dashboard
+- Editing or deleting timeline events or notes
+- Rich-text editing
+- Incident reopening
+- Custom dashboard date ranges
+
+New ideas will be placed in a later-version backlog unless explicitly approved for Version 1.
+
+## Repository visibility and open-source plan
+
+This repository will remain **private during Version 1 and Version 2 development**.
+
+After Version 2 is complete and reviewed, the project may be made public. Public-release preparation will then include, where appropriate:
+
+- A clear release version and changelog
+- An open-source licence
+- `CONTRIBUTING.md`
+- `CODE_OF_CONDUCT.md`
+- `SECURITY.md`
+- Issue and pull-request templates
+- Contributor labels and scoped starter issues
+- A review for secrets, private information, generated files, and repository history
+
+No public or open-source status is implied before that review is complete.
+
+## Documentation
+
+- [Project overview](docs/PROJECT_OVERVIEW.md)
+- [Version 1 requirements](docs/REQUIREMENTS.md)
+- Decision log: `docs/DECISIONS.md` — pending
+- Architecture: `docs/ARCHITECTURE.md` — pending its roadmap step
+- Data flow: `docs/DATA_FLOW.md` — pending its roadmap step
+- Component inventory: `docs/COMPONENTS.md` — pending its roadmap step
+- Debugging guide: `docs/DEBUGGING.md` — pending implementation evidence
+- Daily progress: `docs/DAILY_PROGRESS.md` — pending
+
+Documentation should explain why decisions were made, how execution and data flow work, where state lives, what can fail, and how behaviour is verified.
+
+## Local development
+
+The current repository contains an initial React, TypeScript, and Vite scaffold. Project setup is not considered complete until its roadmap step is reviewed and approved.
+
+Install current dependencies:
+
+```bash
+npm install
+```
+
+Start the current development environment:
+
+```bash
+npm run dev
+```
+
+Current scaffold commands:
+
+```bash
+npm run lint
+npm run build
+npm run preview
+```
+
+Formatting, dedicated type-checking, unit tests, component tests, and end-to-end commands will be added only during their approved tooling and testing steps.
+
+## Development principles
+
+- Work on one roadmap step at a time.
+- Keep changes small, focused, and reviewable.
+- Maintain one authoritative owner for each kind of state.
+- Keep business logic separate from presentation components.
+- Avoid unsafe types and unexplained dependencies.
+- Include loading, empty, error, retry, mobile, and keyboard behaviour.
+- Document important execution and data flows.
+- Add tests for business-critical behaviour.
+- Do not mark work complete until it can be explained and debugged without AI assistance.
+
+## Current roadmap position
+
+- Step 1 — Figma Design: completed
+- Step 2 — Project Requirements and Scope Documentation: in progress
+- Step 3 — React, TypeScript and GitHub Setup: not approved to begin
+
+Step 3 will not begin until the Step 2 documents are reviewed and Suraj explicitly confirms that Step 2 is complete.
+
+## Author
+
+Suraj Adhikary  
+Frontend / Software Engineer  
+[heysuraj.dev](https://www.heysuraj.dev/)

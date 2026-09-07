@@ -8,13 +8,13 @@ The project is being built and owned by [Suraj Adhikary](https://www.heysuraj.de
 
 ## Project status
 
-| Area | Status |
-| --- | --- |
-| Figma design | Completed and approved as the implementation baseline |
-| Version 1 requirements and scope | Completed and approved |
-| Application implementation | Base setup completed through Step 3 |
-| Repository visibility | Private through Version 2 |
-| Public/open-source preparation | Deferred until Version 2 is completed and reviewed |
+| Area                             | Status                                                |
+| -------------------------------- | ----------------------------------------------------- |
+| Figma design                     | Completed and approved as the implementation baseline |
+| Version 1 requirements and scope | Completed and approved                                |
+| Application implementation       | Base setup completed through Step 3                   |
+| Repository visibility            | Private through Version 2                             |
+| Public/open-source preparation   | Deferred until Version 2 is completed and reviewed    |
 
 This README describes the approved product direction. A listed capability should not be interpreted as implemented until its roadmap step is marked complete.
 

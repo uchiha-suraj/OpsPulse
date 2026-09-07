@@ -276,6 +276,11 @@ Documentation should explain why decisions were made, how execution and data flo
 
 ## Local development
 
+### Runtime requirements
+
+- Node.js 24.18.0
+- npm 10.4.0
+
 The current repository contains an initial React, TypeScript, and Vite scaffold. Project setup is not considered complete until its roadmap step is reviewed and approved.
 
 Install current dependencies:

@@ -4,7 +4,7 @@
 
 - Roadmap step: Step 2 — Project Requirements and Scope Documentation
 - Status: Approved on September 7, 2026
-- Implementation status: Architecture baseline completed through Step 5
+- Implementation status: Domain-model baseline completed through Step 6
 - Design status: Approved as the implementation baseline
 - Version covered: Version 1
 
@@ -413,6 +413,7 @@ Version 1 succeeds when:
 - Step 3 — React, TypeScript and GitHub Setup: completed and approved
 - Step 4 — Code Quality and Development Tooling: completed and approved
 - Step 5 — Project Architecture and Folder Structure: completed and approved
-- Step 6 — Domain Models and TypeScript Types: not started
+- Step 6 — Domain Models and TypeScript Types: completed and approved
+- Step 7 — Mock API and Seed Data: in progress
 
-Suraj explicitly confirmed Step 5 complete on September 15, 2026. Step 6 must not begin without separate explicit approval.
+Suraj explicitly confirmed Step 6 complete and approved Step 7 to begin on September 15, 2026.

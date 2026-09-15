@@ -2,8 +2,8 @@
 
 ## Document status
 
-- Roadmap step: Step 5 — Project Architecture and Folder Structure
-- Status: Approved on September 15, 2026
+- Roadmap coverage: Steps 5–6 — Architecture and Domain Models
+- Status: Approved through Step 6 on September 15, 2026
 - Version covered: Version 1
 - Owner: Suraj Adhikary
 - Architecture style: Feature-based modular frontend
@@ -726,3 +726,7 @@ Step 6 can be completed when:
 - Domain-model decisions and architecture documentation are updated.
 - The changes use focused Git commits.
 - Suraj explicitly confirms Step 6 complete.
+
+## Step 6 approval
+
+Suraj explicitly approved the domain models and confirmed Step 6 complete on September 15, 2026. Step 7 — Mock API and Seed Data began with separate explicit approval.

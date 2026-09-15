@@ -66,10 +66,14 @@ src/
 │   └── App.tsx
 ├── styles/
 │   └── global.css
+├── types/
+│   ├── incident.ts
+│   ├── person.ts
+│   └── service.ts
 └── main.tsx
 ```
 
-The project currently contains only the files required by the implemented application shell. Additional folders will be introduced during the roadmap step that first needs them.
+The project currently contains the minimal application shell and the shared domain contracts required for incidents, people, and services. Additional folders will be introduced during the roadmap step that first needs them.
 
 Empty folders and placeholder `.gitkeep` files must not be added.
 
@@ -282,11 +286,29 @@ Feature-specific styles should remain close to the feature when they are not glo
 
 ### `src/types`
 
-Will contain only types genuinely shared across multiple features or application boundaries.
+Contains domain contracts genuinely shared across features, application composition, and mock infrastructure.
 
-Feature-specific types should stay inside the owning feature.
+Current modules:
 
-The exact placement of domain models will be finalized during Step 6 — Domain Models and TypeScript Types.
+- `person.ts` owns person identifiers, responder availability, display labels, and readonly person records.
+- `service.ts` owns service identifiers, service-health states, display labels, operational metrics, and readonly service records.
+- `incident.ts` owns incident severity, lifecycle status, activity types, related-link kinds, normalized relationships, timeline events, internal notes, resolution details, and the active-versus-resolved incident union.
+
+Domain-model rules:
+
+- People and services are referenced from incidents by ID.
+- The commander is separate from supporting responders.
+- Canonical finite values use readonly tuples and derived unions.
+- Display labels use exhaustive `Record` maps.
+- Durable records use readonly properties and collections.
+- Known absent values use `null`.
+- Timestamps are serialized ISO 8601 UTC strings.
+- Duration, active flags, labels, and dashboard aggregates are derived.
+- API-operation, form, and view-model types remain with their owning features.
+- Runtime request and persistence data must be validated before being treated as domain records.
+- Consumers import directly from the owning module; no `src/types/index.ts` barrel exists.
+
+Feature-specific types must remain inside their owning feature.
 
 ## Feature-internal structure
 
@@ -636,6 +658,17 @@ Implemented during Step 5:
 - The feature-based dependency direction and naming rules are confirmed.
 - Formatting, strict linting, type-checking, development startup, and production building pass.
 
+Implemented during Step 6:
+
+- `src/types/person.ts` defines the shared person domain.
+- `src/types/service.ts` defines the shared service-health domain.
+- `src/types/incident.ts` defines the incident aggregate and lifecycle.
+- Finite domain values use readonly tuples, derived unions, and exhaustive labels.
+- Incidents use normalized person and service identifiers.
+- Active and resolved incidents use a discriminated union.
+- Domain records are readonly and compatible with JSON persistence.
+- No runtime dependency, application state, or rendering behaviour was introduced.
+
 Not yet implemented:
 
 - Global providers
@@ -643,7 +676,6 @@ Not yet implemented:
 - Feature modules
 - Shared UI components
 - Mock API
-- Domain models
 - Runtime state-management libraries
 - Testing libraries
 - Production feature workflows
@@ -676,3 +708,21 @@ Step 5 can be completed when:
 - The change has a focused Git commit.
 - Relevant Notion pages are updated.
 - Suraj explicitly confirms Step 5 complete.
+
+## Step 6 completion criteria
+
+Step 6 can be completed when:
+
+- Person, service, and incident domain modules exist.
+- Finite domain values reject unsupported compile-time values.
+- Display-label maps are exhaustive.
+- People and services are referenced by semantic IDs.
+- Durable records use readonly properties and stable nullability.
+- Timestamps use the documented serialized representation.
+- Active and resolved incident states cannot conflict.
+- Derived values are not duplicated in stored records.
+- API, form, and view-model types remain deferred to their owning features.
+- Formatting, linting, type-checking, and building pass.
+- Domain-model decisions and architecture documentation are updated.
+- The changes use focused Git commits.
+- Suraj explicitly confirms Step 6 complete.

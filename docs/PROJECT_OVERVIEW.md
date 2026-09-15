@@ -4,7 +4,7 @@
 
 - Roadmap step: Step 2 — Project Requirements and Scope Documentation
 - Status: Approved on September 7, 2026
-- Implementation status: Code quality baseline completed through Step 4
+- Implementation status: Architecture baseline completed through Step 5
 - Design status: Approved as the implementation baseline
 - Version covered: Version 1
 
@@ -412,6 +412,7 @@ Version 1 succeeds when:
 - Step 2 — Project Requirements and Scope Documentation: completed and approved
 - Step 3 — React, TypeScript and GitHub Setup: completed and approved
 - Step 4 — Code Quality and Development Tooling: completed and approved
-- Step 5 — Project Architecture and Folder Structure: not approved to begin
+- Step 5 — Project Architecture and Folder Structure: completed and approved
+- Step 6 — Domain Models and TypeScript Types: not started
 
-Suraj explicitly confirmed Step 2 complete on September 7, 2026. `DECISIONS.md` will remain without entries until a future project change or trade-off requires a local decision record.
+Suraj explicitly confirmed Step 5 complete on September 15, 2026. Step 6 must not begin without separate explicit approval.

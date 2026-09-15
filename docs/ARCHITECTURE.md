@@ -3,7 +3,7 @@
 ## Document status
 
 - Roadmap step: Step 5 — Project Architecture and Folder Structure
-- Status: Draft for review
+- Status: Approved on September 15, 2026
 - Version covered: Version 1
 - Owner: Suraj Adhikary
 - Architecture style: Feature-based modular frontend

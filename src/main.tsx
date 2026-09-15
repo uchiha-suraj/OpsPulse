@@ -9,8 +9,10 @@ if (!rootElement) {
   throw new Error('Root element #root was not found')
 }
 
+const root = createRoot(rootElement)
+
 function renderApplication() {
-  createRoot(rootElement).render(
+  root.render(
     <StrictMode>
       <App />
     </StrictMode>,

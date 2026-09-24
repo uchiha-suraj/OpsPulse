@@ -2,52 +2,35 @@
 
 > Monitor, coordinate, and resolve incidents faster.
 
-OpsPulse is a production-style frontend portfolio project for monitoring service health, finding incidents, coordinating incident response, and documenting resolutions.
+OpsPulse is a production-style incident-management dashboard for engineering teams. It brings service health, active incidents, responders, timeline updates, internal notes, and resolution details into one focused interface.
 
-The project is being built and owned by [Suraj Adhikary](https://www.heysuraj.dev/), a frontend/software engineer focused on React, TypeScript, and maintainable user-interface architecture.
+This project is being built by [Suraj Adhikary](https://www.heysuraj.dev/) to demonstrate senior-level frontend engineering with React and TypeScript: clear architecture, explicit state ownership, realistic failure handling, accessibility, testing, and maintainable documentation.
 
-## Project status
+> **Work in progress:** the design, requirements, architecture, domain model, mock-data foundation, and local persistence layer are complete. Mock API development is currently in progress. Features listed under the Version 1 scope are planned unless they also appear under “Implemented so far.”
 
-| Area                             | Status                                                  |
-| -------------------------------- | ------------------------------------------------------- |
-| Figma design                     | Completed and approved as the implementation baseline   |
-| Version 1 requirements and scope | Completed and approved                                  |
-| Application implementation       | Base setup and quality tooling completed through Step 4 |
-| Repository visibility            | Private through Version 2                               |
-| Public/open-source preparation   | Deferred until Version 2 is completed and reviewed      |
+## Why OpsPulse?
 
-This README describes the approved product direction. A listed capability should not be interpreted as implemented until its roadmap step is marked complete.
+During a production incident, responders often have to assemble context from monitoring tools, deployment systems, chat channels, and service dashboards. That fragmentation slows down triage and makes it harder to maintain a reliable incident record.
 
-## Product purpose
+OpsPulse explores how a single frontend can help a response team:
 
-During production incidents, engineering teams often collect information from monitoring, deployment, communication, and service-health systems. Fragmented information makes it harder to understand impact, coordinate responders, communicate progress, and preserve an accurate incident record.
+- understand the current health of production systems;
+- find and prioritize active incidents;
+- identify affected services and assigned responders;
+- record a chronological incident timeline;
+- communicate status and internal context; and
+- document a clear resolution.
 
-OpsPulse brings the essential incident-response information into one interface.
+The product is designed for Site Reliability Engineers, DevOps Engineers, Incident Commanders, Engineering Managers, and Software Engineers participating in incident response.
 
-The name represents:
-
-- **Ops:** engineering, DevOps, and production operations
-- **Pulse:** the current health of a company's technical systems
-
-## Target users
-
-- Site Reliability Engineers
-- DevOps Engineers
-- Incident Commanders
-- Engineering Managers
-- Software Engineers participating in incident response
-
-## Version 1 core workflows
-
-Version 1 is deliberately limited to three workflows.
+## Core workflows
 
 ### Monitor production
 
 ```text
 Open dashboard
 → review active incidents
-→ check service health
-→ review incident metrics
+→ check service health and incident metrics
 → open a critical incident
 ```
 
@@ -55,8 +38,8 @@ Open dashboard
 
 ```text
 Open incidents
-→ search or filter incidents
-→ sort and paginate results
+→ search, filter, and sort
+→ paginate through matching records
 → open incident details
 ```
 
@@ -65,11 +48,29 @@ Open incidents
 ```text
 Create incident
 → assign severity and responders
-→ add timeline updates
-→ change incident status
-→ add internal notes
+→ add timeline updates and internal notes
+→ change status
 → resolve incident
 ```
+
+These three workflows define the Version 1 boundary. New ideas are intentionally deferred unless they directly strengthen one of them.
+
+## Implemented so far
+
+- React and Vite application foundation
+- Strict TypeScript configuration
+- Type-aware ESLint and Prettier workflows
+- Feature-oriented source architecture and import boundaries
+- Incident, service-health, and responder domain models
+- Mock Service Worker browser setup
+- Versioned, time-relative demo seed data
+- 32 realistic incidents, including active and historical records
+- Seeded services and responders
+- Zod-validated local persistence
+- Recovery from missing, invalid, or incompatible persisted data
+- Documented requirements, architecture, state ownership, and failure boundaries
+
+The current roadmap position is **Step 7 — Mock API and Seed Data**.
 
 ## Version 1 scope
 
@@ -82,54 +83,123 @@ Create incident
 - Service-health overview
 - Recent incident activity
 - Current on-call responders
-- Predefined date ranges
+- Predefined dashboard ranges: 24 hours, 7 days, and 30 days
 
 ### Incident discovery
 
-- Search
-- Status, severity, service, assignee, and date filters
-- Active-filter indicators and Clear Filters
+- Search and multi-field filtering
+- Active-filter indicators and clear-filters action
 - Sorting and page-based pagination
 - URL-synchronized list state
-- Desktop table and mobile cards
-- Desktop column visibility
+- Desktop data table and responsive mobile cards
+- Desktop column visibility controls
 
 ### Incident management
 
-- Incident details
-- Create and edit incident
-- Assign commander and responders
-- Change active incident status
-- Add timeline updates
-- Add internal notes
-- Resolve incident
-- Local persistence
-- Validation and request feedback
+- Incident details and metadata
+- Create and edit workflows
+- Commander and responder assignment
+- Status transitions
+- Timeline updates and internal notes
+- Resolution workflow
+- Validation, success feedback, failure feedback, and retry behaviour
 
 ### Interface quality
 
 - Responsive desktop and mobile layouts
 - Dark and light themes
 - Keyboard navigation and visible focus states
-- Accessible labels and status presentation
+- Accessible labels and non-colour status indicators
 - Accessible chart summaries
-- Loading, empty, error, retry, offline, permission, optimistic-update, rollback, 404, and unexpected-error states
+- Loading, empty, error, offline, permission, optimistic-update, rollback, 404, and unexpected-error states
 - WCAG 2.2 AA target for primary workflows
 
-## Confirmed Version 1 decisions
+## Design
 
-- The application is frontend-only.
-- Mock Service Worker simulates the API boundary.
-- Versioned local persistence retains successful demo changes.
-- Ananya Rao is the single predefined demo user.
-- Version 1 has no authentication or real authorization.
-- Primary navigation contains only Dashboard and Incidents.
-- Timeline, Notes, and Resolution are functional.
-- Version 1 has no notification centre.
-- No screen displays more than one Create Incident action.
-- Offline mode is read-only and does not queue mutations.
+The approved implementation baseline contains desktop, mobile, light-theme, form-state, loading, empty, error, offline, permission, optimistic-update, 404, and 500-state designs.
 
-## Demo user
+[View the OpsPulse design in Figma](https://www.figma.com/design/R2G8NGciWbcc4IB2y2upjw/OpsPulse-%25E2%2580%2594-Incident-Management-Dashboard?node-id=1-77&p=f)
+
+The design is intentionally treated as a strong baseline rather than a blocker. Interaction details, accessibility states, and a small deferred design backlog are refined during the relevant implementation steps.
+
+## Architecture
+
+OpsPulse is frontend-only in Version 1, but its data boundary is structured like a real client-server application:
+
+```text
+React interface
+→ TanStack Query
+→ typed API service functions
+→ Mock Service Worker request handlers
+→ validated repository
+→ seeded data and localStorage
+```
+
+This boundary keeps presentation components independent from browser storage. A real backend can later replace the mock handlers without requiring the interface to be rewritten.
+
+### State ownership
+
+| State                                         | Owner                            |
+| --------------------------------------------- | -------------------------------- |
+| Simulated server data and request state       | TanStack Query                   |
+| Search, filters, sorting, page, and page size | URL parameters                   |
+| Form values and validation                    | React Hook Form and Zod          |
+| Small global interface preferences            | Zustand, only when justified     |
+| Temporary interaction state                   | Local component state            |
+| Durable demo records                          | Mock repository and localStorage |
+| Metrics and projections                       | Derived from authoritative data  |
+
+The same information should not be stored in multiple state systems without a documented reason.
+
+### Source direction
+
+```text
+src/
+├── app/          # application composition, providers, and routing
+├── components/   # shared layout and reusable UI primitives
+├── features/     # dashboard, incident, and service-health features
+├── hooks/        # shared React hooks
+├── lib/          # framework-independent utilities and configuration
+├── mocks/        # MSW handlers, seed data, and persistence
+├── styles/       # global styles and design tokens
+└── types/        # shared domain models
+```
+
+For the complete reasoning and dependency rules, see [Frontend architecture](docs/ARCHITECTURE.md).
+
+## Technology
+
+### In the project today
+
+- React 19
+- Vite
+- TypeScript in strict mode
+- Zod
+- Mock Service Worker
+- ESLint with type-aware rules
+- Prettier
+
+### Introduced when their roadmap step requires them
+
+- React Router
+- TanStack Query and Query Devtools
+- TanStack Table
+- React Hook Form
+- Zustand
+- Recharts
+- Tailwind CSS
+- Accessible Radix UI or shadcn-style components
+- Lucide React
+- Vitest and React Testing Library
+- Playwright
+- GitHub Actions
+- Vercel
+
+Dependencies are added incrementally so that every package has a clear owner and purpose.
+
+## Demo-data behaviour
+
+Version 1 uses a predefined demo user:
 
 ```text
 Name: Ananya Rao
@@ -138,237 +208,95 @@ Status: On call
 Initials: AR
 ```
 
-Authentication and authorization are not implemented in Version 1. Permission-denied behaviour is a deliberately simulated interface scenario.
+Successful incident changes will persist across refreshes. A Reset Demo Data action will restore the original dataset for reviewers.
 
-## Proposed data flow
+Authentication and real authorization are intentionally out of scope. Permission-denied behaviour is a simulated product state.
 
-```text
-React interface
-→ TanStack Query
-→ API service functions
-→ Mock Service Worker handlers
-→ seeded data and versioned local persistence
-```
+## Simulated integrations
 
-Components will not access browser persistence directly for incident records. The mock API layer will own seeded and persisted demo data so that a future backend can replace it without rewriting presentation components.
+OpsPulse does not claim to connect to production services. The following behaviour is simulated for the frontend demonstration:
 
-Successful local changes will include:
-
-- Created incidents
-- Edited incident information
-- Commander and responder assignments
-- Status changes
-- Timeline updates
-- Internal notes
-- Resolution details
-
-A Reset Demo Data action will restore the original seeded dataset for portfolio reviewers.
-
-## State-ownership direction
-
-- **TanStack Query:** simulated API data, request state, and cache
-- **URL parameters:** incident search, filters, sorting, page, and page size
-- **React Hook Form and Zod:** form values and validation
-- **Zustand:** small global UI preferences only when justified
-- **Local component state:** temporary interface behaviour
-- **Derived calculations:** metrics and projections calculated from authoritative data
-- **Mock persistence layer:** durable demo records
-
-The same information must not be stored in multiple state systems without a documented reason.
-
-## Proposed technology stack
-
-- React
-- Vite
-- TypeScript with strict mode
-- React Router
-- TanStack Query and Query Devtools
-- TanStack Table
-- Zustand
-- React Hook Form
-- Zod
-- Recharts
-- Tailwind CSS
-- Accessible Radix UI or shadcn-style components
-- Lucide React
-- Mock Service Worker
-- Vitest
-- React Testing Library
-- Playwright
-- GitHub Actions
-- Vercel
-
-Packages will be introduced only when required by the active roadmap step. This list is a direction, not permission to install every dependency immediately.
-
-## Simulated behaviour
-
-Version 1 does not connect to real operational services.
-
-The following are simulated:
-
-- API requests, latency, and failures
 - Datadog alerts
 - Grafana dashboards and links
 - Slack incident channels
 - Service-health monitoring
-- On-call responder availability
-- Incident activity
+- On-call availability
+- Real-time incident activity
+- Network latency and failures
 - Permission restrictions
 - Offline conditions
 - Optimistic failure and rollback
 
-No interface or documentation should imply that these are real integrations.
-
-## Out of scope for Version 1
-
-- Real backend or database
-- Real authentication or authorization
-- Multiple organizations or real multi-user accounts
-- Standalone Services page
-- Settings page
-- Notification centre
-- Real WebSockets or real-time collaboration
-- Offline mutation queue
-- Real Slack, Datadog, or Grafana integration
-- Email or push notifications
-- Complex role management
-- Billing or subscriptions
-- AI incident summaries
-- File uploads
-- Backend audit log
-- Separate admin dashboard
-- Editing or deleting timeline events or notes
-- Rich-text editing
-- Incident reopening
-- Custom dashboard date ranges
-
-New ideas will be placed in a later-version backlog unless explicitly approved for Version 1.
-
-## Repository visibility and open-source plan
-
-This repository will remain **private during Version 1 and Version 2 development**.
-
-After Version 2 is complete and reviewed, the project may be made public. Public-release preparation will then include, where appropriate:
-
-- A clear release version and changelog
-- An open-source licence
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-- `SECURITY.md`
-- Issue and pull-request templates
-- Contributor labels and scoped starter issues
-- A review for secrets, private information, generated files, and repository history
-
-No public or open-source status is implied before that review is complete.
-
-## Documentation
-
-- [Project overview](docs/PROJECT_OVERVIEW.md)
-- [Version 1 requirements](docs/REQUIREMENTS.md)
-- Decision log: `docs/DECISIONS.md` — to be added when a future project change or trade-off requires a local record
-- Architecture: `docs/ARCHITECTURE.md` — pending its roadmap step
-- Data flow: `docs/DATA_FLOW.md` — pending its roadmap step
-- Component inventory: `docs/COMPONENTS.md` — pending its roadmap step
-- Debugging guide: `docs/DEBUGGING.md` — pending implementation evidence
-- Daily progress: `docs/DAILY_PROGRESS.md` — pending
-
-Documentation should explain why decisions were made, how execution and data flow work, where state lives, what can fail, and how behaviour is verified.
+Version 1 also excludes a real backend, database, authentication system, WebSockets, billing, AI incident summaries, file uploads, and multi-organization support.
 
 ## Local development
 
-### Runtime requirements
+### Requirements
 
 - Node.js 24.18.0
 - npm 10.4.0
 
-Install dependencies:
+### Setup
 
 ```bash
+git clone https://github.com/uchiha-suraj/OpsPulse.git
+cd OpsPulse
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-### Quality commands
+The application is available at `http://localhost:5173` by default.
 
-Format supported files:
-
-```bash
-npm run format
-```
-
-Check formatting without changing files:
+### Quality checks
 
 ```bash
 npm run format:check
-```
-
-Run strict, type-aware ESLint checks:
-
-```bash
 npm run lint
-```
-
-Apply safe ESLint fixes:
-
-```bash
-npm run lint:fix
-```
-
-Run TypeScript compiler checks:
-
-```bash
 npm run typecheck
-```
-
-Create a type-checked production build:
-
-```bash
 npm run build
 ```
 
-Run the complete current quality workflow:
+Run the complete current quality workflow with:
 
 ```bash
 npm run check
 ```
 
-Preview the production build:
+Testing commands will be added during the approved testing roadmap steps.
 
-```bash
-npm run preview
-```
+## Documentation
 
-The combined `check` command runs formatting validation, ESLint, TypeScript checking, and the production build. Unit, component, and end-to-end test commands will be added during their approved testing steps.
+- [Project overview](docs/PROJECT_OVERVIEW.md)
+- [Version 1 requirements](docs/REQUIREMENTS.md)
+- [Frontend architecture](docs/ARCHITECTURE.md)
 
-## Development principles
+The documentation records not only what is being built, but why decisions were made, where state lives, how data flows, what can fail, and how behaviour should be verified.
 
-- Work on one roadmap step at a time.
-- Keep changes small, focused, and reviewable.
-- Maintain one authoritative owner for each kind of state.
-- Keep business logic separate from presentation components.
-- Avoid unsafe types and unexplained dependencies.
-- Include loading, empty, error, retry, mobile, and keyboard behaviour.
-- Document important execution and data flows.
-- Add tests for business-critical behaviour.
-- Do not mark work complete until it can be explained and debugged without AI assistance.
+## Roadmap
 
-## Current roadmap position
+| Phase                                                | Status      |
+| ---------------------------------------------------- | ----------- |
+| Design and Version 1 scope                           | Complete    |
+| Project setup and code-quality tooling               | Complete    |
+| Architecture and domain modelling                    | Complete    |
+| Mock API, seed data, and persistence                 | In progress |
+| Routing, providers, and design system                | Planned     |
+| Dashboard and incident workflows                     | Planned     |
+| Resilience, accessibility, and responsive review     | Planned     |
+| Automated testing and CI                             | Planned     |
+| Performance, deployment, and production verification | Planned     |
+| Portfolio case study and launch material             | Planned     |
 
-- Step 1 — Figma Design: completed
-- Step 2 — Project Requirements and Scope Documentation: completed
-- Step 3 — React, TypeScript and GitHub Setup: completed
-- Step 4 — Code Quality and Development Tooling: completed
-- Step 5 — Project Architecture and Folder Structure: not approved to begin
+The roadmap is deliberately sequential: each foundation is understood, verified, and documented before the next layer is introduced.
 
-Suraj approved the Version 1 requirements and explicitly confirmed Step 2 complete on September 7, 2026.
+## Repository status
+
+This repository is public so recruiters and other engineers can follow the project as it develops. It is not yet presented as a finished product or an open-source contribution project.
+
+No open-source licence has been added yet. Until that changes, the code is available for review, but reuse and redistribution are not granted. Contribution guidelines, a code of conduct, security policy, templates, and a formal release will be considered after the core product is complete.
 
 ## Author
 
-Suraj Adhikary  
-Frontend / Software Engineer  
-[heysuraj.dev](https://www.heysuraj.dev/)
+**Suraj Adhikary**<br>
+Frontend / Software Engineer<br>
+[Portfolio](https://www.heysuraj.dev/) · [GitHub](https://github.com/uchiha-suraj)

@@ -298,5 +298,5 @@ No open-source licence has been added yet. Until that changes, the code is avail
 ## Author
 
 **Suraj Adhikary**<br>
-Frontend / Software Engineer<br>
+Software Engineer<br>
 [Portfolio](https://www.heysuraj.dev/) · [GitHub](https://github.com/uchiha-suraj)

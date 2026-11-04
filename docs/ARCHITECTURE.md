@@ -63,17 +63,36 @@ This provides clearer ownership than global folders such as `pages`, `api`, and 
 ```text
 src/
 ├── app/
+│   ├── providers/
+│   │   ├── AppProviders.tsx
+│   │   └── queryClient.ts
+│   ├── router/
+│   │   ├── AppRoot.tsx
+│   │   ├── NotFoundPage.tsx
+│   │   ├── RouteErrorPage.tsx
+│   │   ├── paths.ts
+│   │   └── router.tsx
 │   └── App.tsx
+├── features/
+│   ├── dashboard/pages/
+│   │   └── DashboardPage.tsx
+│   └── incidents/pages/
+│       ├── CreateIncidentPage.tsx
+│       ├── IncidentDetailsPage.tsx
+│       └── IncidentListPage.tsx
+├── lib/
+├── mocks/
 ├── styles/
 │   └── global.css
 ├── types/
+│   ├── dashboard.ts
 │   ├── incident.ts
 │   ├── person.ts
 │   └── service.ts
 └── main.tsx
 ```
 
-The project currently contains the minimal application shell and the shared domain contracts required for incidents, people, and services. Additional folders will be introduced during the roadmap step that first needs them.
+The project now contains the application composition root, global query provider, route configuration, feature-owned route placeholders, shared domain contracts, and the mock API boundary. Additional folders will be introduced during the roadmap step that first needs them.
 
 Empty folders and placeholder `.gitkeep` files must not be added.
 
@@ -462,7 +481,7 @@ Each piece of state must have one authoritative owner.
 | Derived data           | Calculated from its source | Active counts and filtered summaries           |
 | Durable demo records   | Mock persistence layer     | Created and updated incidents                  |
 
-These libraries describe the approved direction. They will be installed only during the roadmap step that requires them.
+TanStack Query is now installed and its single application-wide client is configured. The remaining libraries describe the approved direction and will be installed only during the roadmap step that requires them.
 
 The same value must not be independently stored in multiple state systems unless the reason is documented.
 
@@ -490,25 +509,43 @@ index.html
 → src/main.tsx
 → validate #root
 → import global styles
+→ start Mock Service Worker
 → render src/app/App.tsx in React Strict Mode
-→ display the current OpsPulse placeholder
+→ AppProviders supplies the stable QueryClient
+→ RouterProvider reads the browser URL
+→ AppRoot renders the matched child route through Outlet
+→ feature-owned route page renders
 ```
 
-If the root element is missing, startup throws a descriptive error instead of passing an invalid value to React.
+If the root element is missing, startup throws a descriptive error instead of passing an invalid value to React. If MSW startup fails, the failure is logged and the React application still renders so feature-level request errors can be handled normally.
 
-## Planned application flow
+## Current application flow
 
 ```text
 index.html
 → main.tsx
-→ application providers
-→ router
-→ application layout
-→ route page
-→ feature components
+→ App
+→ AppProviders
+→ QueryClientProvider
+→ RouterProvider
+→ AppRoot
+→ matched route page
 ```
 
-Providers and router configuration will be introduced in Step 8. The responsive application layout will be implemented in Step 10.
+The router is created once outside the React render tree. The QueryClient is also created once at module scope so application renders and navigation cannot discard the cache. The responsive application layout will wrap `AppRoot`'s outlet during Step 10.
+
+The confirmed Version 1 route map is:
+
+| URL                      | Owner              | Purpose                  |
+| ------------------------ | ------------------ | ------------------------ |
+| `/`                      | Application router | Redirect to `/dashboard` |
+| `/dashboard`             | Dashboard feature  | Operations dashboard     |
+| `/incidents`             | Incidents feature  | Incident discovery       |
+| `/incidents/new`         | Incidents feature  | Create Incident workflow |
+| `/incidents/:incidentId` | Incidents feature  | Incident details         |
+| `*`                      | Application router | Not-found fallback       |
+
+Edit and Resolve remain actions within incident details rather than separate routes. Services and Settings remain excluded from Version 1 navigation and routing.
 
 ## Planned data flow
 
@@ -682,13 +719,27 @@ Implemented during Step 7:
 - Dashboard metrics are derived from authoritative records rather than stored separately.
 - The complete handler surface was verified through the running browser service worker.
 
+Implemented during Step 8:
+
+- React Router Data Mode owns browser navigation and route matching.
+- One router instance is created outside the React render tree.
+- One QueryClient instance owns future simulated server cache and request state.
+- Query defaults use a 30-second stale time, one query retry, and no mutation retry.
+- React Query Devtools render only in development and start closed.
+- `AppProviders` is the composition point for genuine application-wide providers.
+- `/` redirects to `/dashboard` with history replacement.
+- Dashboard, incident list, create incident, and incident details have feature-owned route pages.
+- Incident details read `incidentId` directly from React Router parameters.
+- Application-owned not-found and safe route-error fallbacks provide recovery links.
+- No feature data query, form state, theme state, or application-shell UI was introduced.
+
 Not yet implemented:
 
-- Global providers
-- Application router
-- Feature modules
 - Shared UI components
-- Runtime state-management libraries
+- Functional feature modules beyond route ownership
+- URL-synchronized incident-list controls
+- Query hooks and API service functions
+- Form and global UI state libraries
 - Testing libraries
 - Production feature workflows
 
@@ -745,4 +796,8 @@ Suraj explicitly approved the domain models and confirmed Step 6 complete on Sep
 
 ## Step 7 completion status
 
-Step 7 implementation and verification were completed on November 5, 2026. Formatting, strict linting, TypeScript checking, the production build, and manual browser endpoint verification pass. Step 7 awaits Suraj's final approval, and Step 8 has not started.
+Step 7 implementation and verification were completed on November 5, 2026. Formatting, strict linting, TypeScript checking, the production build, and manual browser endpoint verification pass. Suraj approved Step 7 and explicitly started Step 8 on November 5, 2026.
+
+## Step 8 completion status
+
+The routing and global-provider implementation was completed and pushed in `f9f020b feat: add routing and global query provider`. Formatting, strict ESLint, TypeScript checking, the production build, and manual route verification pass. Step 8 awaits Suraj's final approval; Step 9 has not started.

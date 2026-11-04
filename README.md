@@ -6,7 +6,7 @@ OpsPulse is a production-style incident-management dashboard for engineering tea
 
 This project is being built by [Suraj Adhikary](https://www.heysuraj.dev/) to demonstrate senior-level frontend engineering with React and TypeScript: clear architecture, explicit state ownership, realistic failure handling, accessibility, testing, and maintainable documentation.
 
-> **Work in progress:** the design, requirements, architecture, domain model, mock-data foundation, and local persistence layer are complete. Mock API development is currently in progress. Features listed under the Version 1 scope are planned unless they also appear under “Implemented so far.”
+> **Work in progress:** the design, requirements, architecture, domain model, mock API, persistence, routing, and global query-provider foundations are implemented. Feature screens remain in development. Capabilities listed under the Version 1 scope are planned unless they also appear under “Implemented so far.”
 
 ## Why OpsPulse?
 
@@ -73,9 +73,12 @@ These three workflows define the Version 1 boundary. New ideas are intentionally
 - Incident create, edit, status, timeline, note, and resolution endpoints
 - Derived dashboard metrics for 24-hour, 7-day, and 30-day ranges
 - Deterministic request latency and consistent failure mapping
+- React Router Data Mode with feature-owned routes
+- Stable application-wide TanStack Query client and development Devtools
+- Dashboard, incident list, create incident, incident details, route-error, and not-found route boundaries
 - Documented requirements, architecture, state ownership, and failure boundaries
 
-**Step 7 — Mock API and Seed Data** is implemented and verified. It is awaiting final project-owner approval before Step 8 begins.
+**Step 8 — Routing and Global Providers** is implemented and verified. It is awaiting final project-owner approval before Step 9 begins.
 
 ## Version 1 scope
 
@@ -285,8 +288,9 @@ The documentation records not only what is being built, but why decisions were m
 | Design and Version 1 scope                           | Complete          |
 | Project setup and code-quality tooling               | Complete          |
 | Architecture and domain modelling                    | Complete          |
-| Mock API, seed data, and persistence                 | Awaiting approval |
-| Routing, providers, and design system                | Planned           |
+| Mock API, seed data, and persistence                 | Complete          |
+| Routing and global providers                         | Awaiting approval |
+| Design system and reusable UI                        | Planned           |
 | Dashboard and incident workflows                     | Planned           |
 | Resilience, accessibility, and responsive review     | Planned           |
 | Automated testing and CI                             | Planned           |

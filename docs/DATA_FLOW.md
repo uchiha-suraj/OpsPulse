@@ -33,6 +33,8 @@ src/main.tsx validates #root
 → creates the MSW worker with the central handler registry
 → waits for worker.start()
 → renders the React application once
+→ AppProviders supplies the stable QueryClient
+→ RouterProvider selects the URL-matched page
 ```
 
 If worker startup fails, the failure is logged and the application still renders. Feature requests will then fail normally and can be represented by the application error states added in later steps.
@@ -242,7 +244,7 @@ For 24-hour, 7-day, and 30-day ranges it calculates:
 - current service health; and
 - on-call responders.
 
-Mutation responses return the changed incident. Later TanStack Query hooks will invalidate or update affected incident-list, detail, and dashboard queries.
+Mutation responses return the changed incident. The global QueryClient now exists, but no query hooks consume the API yet. Later feature steps will define query keys and invalidate or update affected incident-list, detail, and dashboard queries.
 
 ## State ownership
 
@@ -256,8 +258,33 @@ Mutation responses return the changed incident. Later TanStack Query hooks will 
 | Simulated latency                              | `src/mocks/http/mockLatency.ts`         |
 | Derived dashboard metrics                      | Dashboard handler                       |
 | Search/filter/sort/page request interpretation | Incident-list handler                   |
+| Future API cache and request state             | Application QueryClient                 |
+| Current route and route parameters             | React Router                            |
 
-TanStack Query, URL state, and form state are not introduced until their approved roadmap steps.
+TanStack Query and React Router are now configured globally. No feature query data exists until a mounted feature uses a query hook. Incident-list query parameters and form state remain deferred to their approved feature steps.
+
+## Routing and provider flow
+
+```text
+main.tsx
+→ App
+→ AppProviders
+→ QueryClientProvider
+→ RouterProvider
+→ AppRoot
+→ Outlet
+→ matched feature page
+```
+
+`queryClient.ts` creates one cache owner outside React. `AppProviders.tsx` supplies it and mounts the closed development-only Devtools. `router.tsx` creates one browser router outside React. Navigation changes router location state and re-renders the matched outlet; it does not recreate the QueryClient or duplicate the current URL in component state.
+
+Current query defaults are:
+
+- 30-second query stale time;
+- one automatic query retry; and
+- no automatic mutation retry.
+
+Normal TanStack Query focus and reconnect behaviour remains enabled. No global query-error toast or cache mutation policy is introduced before the relevant feature and feedback steps.
 
 ## Failure and debugging points
 
@@ -290,4 +317,4 @@ Formatting, strict ESLint, TypeScript checking, and the production build pass. A
 
 ## Step boundary
 
-Step 7 implements the data boundary only. It does not introduce routing, React providers, TanStack Query, forms, or feature screens. Those remain part of later roadmap steps and must not begin until Step 7 is explicitly approved.
+Step 7 implemented the mock data boundary. Step 8 adds routing and the global QueryClient without fetching feature data or implementing final screens. Query hooks, URL-synchronized list controls, forms, the responsive shell, and production feedback remain part of later roadmap steps.

@@ -1,9 +1,12 @@
+import { RouterProvider } from 'react-router/dom'
+import { AppProviders } from './providers/AppProviders'
+import { router } from './router/router'
+
 function App() {
   return (
-    <main>
-      <h1>OpsPulse</h1>
-      <p>Incident Management Dashboard</p>
-    </main>
+    <AppProviders>
+      <RouterProvider router={router} />
+    </AppProviders>
   )
 }
 

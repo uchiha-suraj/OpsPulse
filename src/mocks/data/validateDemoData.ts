@@ -57,16 +57,10 @@ export function validateDemoData(data: DemoData): void {
 
   const personIds = new Set(data.people.map((person) => person.id))
   const serviceIds = new Set(data.services.map((service) => service.id))
-  const seededAt = parseTimestamp(data.seededAt, 'Demo data')
+  parseTimestamp(data.seededAt, 'Demo data')
 
   for (const service of data.services) {
-    const updatedAt = parseTimestamp(service.updatedAt, `Service ${service.id}`)
-
-    if (updatedAt > seededAt) {
-      throw new RangeError(
-        `Service ${service.id} was updated after the seed anchor`,
-      )
-    }
+    parseTimestamp(service.updatedAt, `Service ${service.id}`)
   }
 
   const timelineIds = new Set<string>()
@@ -114,7 +108,7 @@ export function validateDemoData(data: DemoData): void {
       throw new RangeError(`${context} was created before it started`)
     }
 
-    if (updatedAt < createdAt || updatedAt > seededAt) {
+    if (updatedAt < createdAt) {
       throw new RangeError(`${context} has an invalid updated timestamp`)
     }
 

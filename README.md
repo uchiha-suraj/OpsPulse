@@ -68,9 +68,14 @@ These three workflows define the Version 1 boundary. New ideas are intentionally
 - Seeded services and responders
 - Zod-validated local persistence
 - Recovery from missing, invalid, or incompatible persisted data
+- Typed mock API success, pagination, and error contracts
+- Searchable, filterable, sortable, and paginated incident endpoints
+- Incident create, edit, status, timeline, note, and resolution endpoints
+- Derived dashboard metrics for 24-hour, 7-day, and 30-day ranges
+- Deterministic request latency and consistent failure mapping
 - Documented requirements, architecture, state ownership, and failure boundaries
 
-The current roadmap position is **Step 7 — Mock API and Seed Data**.
+**Step 7 — Mock API and Seed Data** is implemented and verified. It is awaiting final project-owner approval before Step 8 begins.
 
 ## Version 1 scope
 
@@ -269,23 +274,24 @@ Testing commands will be added during the approved testing roadmap steps.
 - [Project overview](docs/PROJECT_OVERVIEW.md)
 - [Version 1 requirements](docs/REQUIREMENTS.md)
 - [Frontend architecture](docs/ARCHITECTURE.md)
+- [Data flow and mock API](docs/DATA_FLOW.md)
 
 The documentation records not only what is being built, but why decisions were made, where state lives, how data flows, what can fail, and how behaviour should be verified.
 
 ## Roadmap
 
-| Phase                                                | Status      |
-| ---------------------------------------------------- | ----------- |
-| Design and Version 1 scope                           | Complete    |
-| Project setup and code-quality tooling               | Complete    |
-| Architecture and domain modelling                    | Complete    |
-| Mock API, seed data, and persistence                 | In progress |
-| Routing, providers, and design system                | Planned     |
-| Dashboard and incident workflows                     | Planned     |
-| Resilience, accessibility, and responsive review     | Planned     |
-| Automated testing and CI                             | Planned     |
-| Performance, deployment, and production verification | Planned     |
-| Portfolio case study and launch material             | Planned     |
+| Phase                                                | Status            |
+| ---------------------------------------------------- | ----------------- |
+| Design and Version 1 scope                           | Complete          |
+| Project setup and code-quality tooling               | Complete          |
+| Architecture and domain modelling                    | Complete          |
+| Mock API, seed data, and persistence                 | Awaiting approval |
+| Routing, providers, and design system                | Planned           |
+| Dashboard and incident workflows                     | Planned           |
+| Resilience, accessibility, and responsive review     | Planned           |
+| Automated testing and CI                             | Planned           |
+| Performance, deployment, and production verification | Planned           |
+| Portfolio case study and launch material             | Planned           |
 
 The roadmap is deliberately sequential: each foundation is understood, verified, and documented before the next layer is introduced.
 

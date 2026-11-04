@@ -669,13 +669,25 @@ Implemented during Step 6:
 - Domain records are readonly and compatible with JSON persistence.
 - No runtime dependency, application state, or rendering behaviour was introduced.
 
+Implemented during Step 7:
+
+- `src/mocks/data` owns versioned, time-relative demo records.
+- `src/mocks/persistence` owns validated `localStorage` persistence and recovery.
+- `src/mocks/http` owns deterministic latency, request parsing, and error mapping.
+- `src/mocks/handlers` owns reference-data, incident, dashboard, and reset routes.
+- `src/lib/api/apiResponse.ts` defines shared HTTP success, pagination, and error envelopes.
+- `src/types/dashboard.ts` defines the derived dashboard response domain.
+- All approved mock endpoints use the central handler registry.
+- Incident mutations validate relationships and persist complete snapshots atomically.
+- Dashboard metrics are derived from authoritative records rather than stored separately.
+- The complete handler surface was verified through the running browser service worker.
+
 Not yet implemented:
 
 - Global providers
 - Application router
 - Feature modules
 - Shared UI components
-- Mock API
 - Runtime state-management libraries
 - Testing libraries
 - Production feature workflows
@@ -686,7 +698,7 @@ These will be added only during their approved roadmap steps.
 
 - `docs/PROJECT_OVERVIEW.md`
 - `docs/REQUIREMENTS.md`
-- `docs/DATA_FLOW.md` when implemented
+- `docs/DATA_FLOW.md`
 - `docs/COMPONENTS.md` when implemented
 - `docs/DEBUGGING.md` when implemented
 - Notion Architecture and Data Flow page
@@ -730,3 +742,7 @@ Step 6 can be completed when:
 ## Step 6 approval
 
 Suraj explicitly approved the domain models and confirmed Step 6 complete on September 15, 2026. Step 7 — Mock API and Seed Data began with separate explicit approval.
+
+## Step 7 completion status
+
+Step 7 implementation and verification were completed on November 5, 2026. Formatting, strict linting, TypeScript checking, the production build, and manual browser endpoint verification pass. Step 7 awaits Suraj's final approval, and Step 8 has not started.

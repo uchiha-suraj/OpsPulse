@@ -63,8 +63,11 @@ This provides clearer ownership than global folders such as `pages`, `api`, and 
 ```text
 src/
 ├── app/
+│   ├── dev/
+│   │   └── ComponentGalleryPage.tsx
 │   ├── providers/
 │   │   ├── AppProviders.tsx
+│   │   ├── ThemeProvider.tsx
 │   │   └── queryClient.ts
 │   ├── router/
 │   │   ├── AppRoot.tsx
@@ -72,7 +75,26 @@ src/
 │   │   ├── RouteErrorPage.tsx
 │   │   ├── paths.ts
 │   │   └── router.tsx
+│   ├── stores/
+│   │   └── themeStore.ts
+│   ├── theme/
+│   │   └── applyTheme.ts
 │   └── App.tsx
+├── components/
+│   └── ui/
+│       ├── Alert.tsx
+│       ├── Avatar.tsx
+│       ├── Badge.tsx
+│       ├── Button.tsx
+│       ├── Card.tsx
+│       ├── Checkbox.tsx
+│       ├── EmptyState.tsx
+│       ├── IconButton.tsx
+│       ├── Input.tsx
+│       ├── Select.tsx
+│       ├── Skeleton.tsx
+│       ├── Textarea.tsx
+│       └── Tooltip.tsx
 ├── features/
 │   ├── dashboard/pages/
 │   │   └── DashboardPage.tsx
@@ -81,18 +103,23 @@ src/
 │       ├── IncidentDetailsPage.tsx
 │       └── IncidentListPage.tsx
 ├── lib/
+│   ├── api/
+│   └── utils/
+│       └── cn.ts
 ├── mocks/
 ├── styles/
-│   └── global.css
+│   ├── global.css
+│   └── tokens.css
 ├── types/
 │   ├── dashboard.ts
 │   ├── incident.ts
 │   ├── person.ts
-│   └── service.ts
+│   ├── service.ts
+│   └── theme.ts
 └── main.tsx
 ```
 
-The project now contains the application composition root, global query provider, route configuration, feature-owned route placeholders, shared domain contracts, and the mock API boundary. Additional folders will be introduced during the roadmap step that first needs them.
+The project now contains the application composition root, global query and theme providers, route configuration, feature-owned route placeholders, shared domain contracts, the mock API boundary, semantic design tokens, and reusable domain-neutral UI primitives. Additional folders will be introduced during the roadmap step that first needs them.
 
 Empty folders and placeholder `.gitkeep` files must not be added.
 
@@ -153,16 +180,15 @@ The `app` layer may compose features and shared modules. It should not contain d
 
 ### `src/app/providers`
 
-Will contain global React providers when they are introduced.
+Contains genuine application-wide providers.
 
-Examples may include:
+- `AppProviders.tsx` composes the provider tree.
+- `QueryClientProvider` owns simulated server cache and request state.
+- `ThemeProvider.tsx` subscribes only to the active theme and applies it to the document.
+- Radix Tooltip Provider supplies shared tooltip timing.
+- React Query Devtools render only during development.
 
-- TanStack Query provider
-- Router provider composition
-- Theme provider
-- Global error or toast provider
-
-Provider order must be intentional and documented when one provider depends on another.
+Provider order is intentional. Query owns server state, Theme synchronizes the document theme, and Tooltip wraps the routed interface without owning business data.
 
 ### `src/app/router`
 
@@ -191,18 +217,11 @@ Layout components may compose shared UI primitives but must not own incident-man
 
 ### `src/components/ui`
 
-Will contain reusable, domain-neutral interface primitives.
+Contains reusable, domain-neutral interface primitives.
 
-Examples may include:
+Implemented primitives include buttons, text controls, selection controls, badges, avatars, cards, skeletons, alerts, tooltips, and empty states. These components accept values and callbacks through props and do not own incident, service, dashboard, form, or server state.
 
-- Button
-- Dialog
-- Input
-- Select
-- Badge
-- Skeleton
-- Toast
-- Pagination primitives
+Incident-specific badges, dashboard KPI cards, pagination rules, timeline items, dialogs, and toast workflows remain deferred to the feature step that can define their real requirements.
 
 A component belongs here only when it is reusable without understanding incidents, services, or dashboard rules.
 
@@ -293,10 +312,10 @@ Mocks may depend on public domain or API contracts, but they must not depend on 
 
 Owns global styling concerns.
 
-It may contain:
-
-- Global element defaults
-- Design tokens when introduced
+- `global.css` imports Tailwind, imports the token layer, and applies browser-wide defaults.
+- `tokens.css` maps approved Figma foundations to semantic Tailwind theme variables.
+- Dark and light modes replace semantic values without changing component class names.
+- Severity colours remain stable across themes.
 - Theme variables
 - Shared animation definitions
 - Global accessibility utilities
@@ -476,12 +495,13 @@ Each piece of state must have one authoritative owner.
 | Shareable list state   | URL parameters             | Search, filters, sorting, page, page size      |
 | Form state             | React Hook Form            | Create, edit, note, timeline, resolution forms |
 | Form validation        | Zod schemas                | Required fields and domain validation          |
-| Small global UI state  | Zustand when justified     | Theme or collapsed navigation                  |
+| Theme preference       | Zustand                    | Dark or light mode with guarded persistence    |
+| Other global UI state  | Zustand when justified     | Collapsed navigation when Step 10 requires it  |
 | Temporary UI state     | Nearest component          | Open menu, selected tab, local disclosure      |
 | Derived data           | Calculated from its source | Active counts and filtered summaries           |
 | Durable demo records   | Mock persistence layer     | Created and updated incidents                  |
 
-TanStack Query is now installed and its single application-wide client is configured. The remaining libraries describe the approved direction and will be installed only during the roadmap step that requires them.
+TanStack Query owns simulated server state. Zustand now owns only the theme preference. The theme store persists one validated `dark | light` value under `opspulse:theme`; browser storage is persistence, not a second runtime state owner.
 
 The same value must not be independently stored in multiple state systems unless the reason is documented.
 
@@ -509,15 +529,18 @@ index.html
 → src/main.tsx
 → validate #root
 → import global styles
+→ hydrate and apply the persisted theme
 → start Mock Service Worker
 → render src/app/App.tsx in React Strict Mode
 → AppProviders supplies the stable QueryClient
+→ ThemeProvider synchronizes future theme changes
+→ Tooltip Provider supplies shared interaction timing
 → RouterProvider reads the browser URL
 → AppRoot renders the matched child route through Outlet
 → feature-owned route page renders
 ```
 
-If the root element is missing, startup throws a descriptive error instead of passing an invalid value to React. If MSW startup fails, the failure is logged and the React application still renders so feature-level request errors can be handled normally.
+If the root element is missing, startup throws a descriptive error instead of passing an invalid value to React. Invalid or unavailable theme persistence falls back safely to dark without blocking rendering. If MSW startup fails, the failure is logged and the React application still renders so feature-level request errors can be handled normally.
 
 ## Current application flow
 
@@ -527,12 +550,14 @@ index.html
 → App
 → AppProviders
 → QueryClientProvider
+→ ThemeProvider
+→ TooltipProvider
 → RouterProvider
 → AppRoot
 → matched route page
 ```
 
-The router is created once outside the React render tree. The QueryClient is also created once at module scope so application renders and navigation cannot discard the cache. The responsive application layout will wrap `AppRoot`'s outlet during Step 10.
+The router is created once outside the React render tree. The QueryClient is also created once at module scope so application renders and navigation cannot discard the cache. Theme changes update one Zustand value and the document's `data-theme` attribute; semantic CSS variables then restyle descendants without duplicating theme state. The responsive application layout will wrap `AppRoot`'s outlet during Step 10.
 
 The confirmed Version 1 route map is:
 
@@ -733,9 +758,22 @@ Implemented during Step 8:
 - Application-owned not-found and safe route-error fallbacks provide recovery links.
 - No feature data query, form state, theme state, or application-shell UI was introduced.
 
+Implemented during Step 9:
+
+- Tailwind CSS v4 is integrated through the official Vite plugin.
+- Semantic colour, typography, radius, and theme tokens map the approved Figma foundation into CSS.
+- Dark is the deterministic default; light and dark values share the same component-facing token names.
+- Zustand owns the active theme and persists only the validated preference.
+- Theme persistence failures fall back to in-memory state without crashing startup.
+- Class Variance Authority, `clsx`, and `tailwind-merge` provide typed, conflict-safe component variants.
+- Lucide React supplies the shared icon vocabulary.
+- Radix Checkbox, Select, and Tooltip provide accessible interaction mechanics without owning business state.
+- Domain-neutral buttons, controls, badges, avatars, cards, loading, feedback, tooltip, and empty-state primitives are implemented.
+- A development-only lazy route exposes the component gallery without adding a production route.
+- Dark theme, light theme, persistence, focus, keyboard controls, loading, disabled, validation, indeterminate, select, and tooltip behaviour were manually verified.
+
 Not yet implemented:
 
-- Shared UI components
 - Functional feature modules beyond route ownership
 - URL-synchronized incident-list controls
 - Query hooks and API service functions
@@ -750,7 +788,7 @@ These will be added only during their approved roadmap steps.
 - `docs/PROJECT_OVERVIEW.md`
 - `docs/REQUIREMENTS.md`
 - `docs/DATA_FLOW.md`
-- `docs/COMPONENTS.md` when implemented
+- `docs/COMPONENTS.md`
 - `docs/DEBUGGING.md` when implemented
 - Notion Architecture and Data Flow page
 - Notion Decision Log
@@ -800,4 +838,8 @@ Step 7 implementation and verification were completed on November 5, 2026. Forma
 
 ## Step 8 completion status
 
-The routing and global-provider implementation was completed and pushed in `f9f020b feat: add routing and global query provider`. Formatting, strict ESLint, TypeScript checking, the production build, and manual route verification pass. Step 8 awaits Suraj's final approval; Step 9 has not started.
+The routing and global-provider implementation was completed and pushed in `f9f020b feat: add routing and global query provider`. Formatting, strict ESLint, TypeScript checking, the production build, and manual route verification pass. Suraj approved Step 8 and explicitly started Step 9 on November 5, 2026.
+
+## Step 9 completion status
+
+The design-system implementation and manual component-gallery verification were completed on November 5, 2026. Documentation, Notion synchronization, the final quality run, commit, push, and Suraj's explicit completion approval remain before Step 9 can be marked complete. Step 10 has not started.

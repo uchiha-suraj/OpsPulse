@@ -260,8 +260,29 @@ Mutation responses return the changed incident. The global QueryClient now exist
 | Search/filter/sort/page request interpretation | Incident-list handler                   |
 | Future API cache and request state             | Application QueryClient                 |
 | Current route and route parameters             | React Router                            |
+| Active theme preference                        | Zustand theme store                     |
+| Persisted theme preference                     | `opspulse:theme` in `localStorage`      |
 
 TanStack Query and React Router are now configured globally. No feature query data exists until a mounted feature uses a query hook. Incident-list query parameters and form state remain deferred to their approved feature steps.
+
+## Theme-preference flow
+
+```text
+Application module loads
+→ Zustand persist middleware reads opspulse:theme
+→ persisted value is validated as dark or light
+→ invalid, missing, or unavailable storage falls back to dark
+→ main.tsx applies data-theme before React renders
+→ ThemeProvider subscribes to the theme slice
+→ setTheme or toggleTheme updates Zustand
+→ persistence attempts a guarded localStorage write
+→ ThemeProvider updates document.documentElement.dataset.theme
+→ semantic CSS variables restyle the interface
+```
+
+Zustand is the sole runtime owner. `localStorage` preserves the preference across reloads but is not read directly by presentation components. A storage read or write failure leaves the in-memory theme usable and does not block the application.
+
+Only `ThemeProvider` subscribes to the theme value at the provider boundary. Components that need the current value or toggle action select only those fields from the store. CSS handles descendant visual changes after the document attribute changes.
 
 ## Routing and provider flow
 
@@ -295,6 +316,8 @@ Normal TanStack Query focus and reconnect behaviour remains enabled. No global q
 5. If a request returns 503, inspect browser storage availability or quota errors.
 6. If dashboard values look stale, confirm the consuming query is refreshed after the mutation.
 7. If timestamps fail persistence validation, check their ordering against incident creation, update, and resolution times.
+8. If the theme does not persist, inspect `opspulse:theme`, confirm the stored value is `dark` or `light`, and check whether browser storage is blocked.
+9. If the theme attribute changes but colours do not, confirm `tokens.css` is imported after Tailwind in `global.css` and that components use semantic token utilities.
 
 ## Verification completed
 
@@ -317,4 +340,4 @@ Formatting, strict ESLint, TypeScript checking, and the production build pass. A
 
 ## Step boundary
 
-Step 7 implemented the mock data boundary. Step 8 adds routing and the global QueryClient without fetching feature data or implementing final screens. Query hooks, URL-synchronized list controls, forms, the responsive shell, and production feedback remain part of later roadmap steps.
+Step 7 implemented the mock data boundary. Step 8 added routing and the global QueryClient. Step 9 added semantic design tokens, guarded theme persistence, global tooltip timing, and domain-neutral UI primitives without fetching feature data or implementing final screens. Query hooks, URL-synchronized list controls, forms, the responsive shell, and production mutation feedback remain part of later roadmap steps.

@@ -76,9 +76,15 @@ These three workflows define the Version 1 boundary. New ideas are intentionally
 - React Router Data Mode with feature-owned routes
 - Stable application-wide TanStack Query client and development Devtools
 - Dashboard, incident list, create incident, incident details, route-error, and not-found route boundaries
+- Tailwind CSS v4 with semantic dark and light design tokens
+- Persisted global theme preference owned by Zustand
+- Accessible reusable buttons, form controls, selection controls, feedback, loading, and empty-state primitives
+- Radix-powered checkbox, select, and tooltip interactions
+- Lucide icon system and typed component variants
+- Development-only component gallery for visual and keyboard verification
 - Documented requirements, architecture, state ownership, and failure boundaries
 
-**Step 8 — Routing and Global Providers** is implemented and verified. It is awaiting final project-owner approval before Step 9 begins.
+**Step 9 — Design System and Reusable UI Components** is implemented and manually verified. Documentation and the final project-owner checkpoint are in progress.
 
 ## Version 1 scope
 
@@ -152,7 +158,8 @@ This boundary keeps presentation components independent from browser storage. A 
 | Simulated server data and request state       | TanStack Query                   |
 | Search, filters, sorting, page, and page size | URL parameters                   |
 | Form values and validation                    | React Hook Form and Zod          |
-| Small global interface preferences            | Zustand, only when justified     |
+| Theme preference                              | Zustand with local persistence   |
+| Other small global interface preferences      | Zustand, only when justified     |
 | Temporary interaction state                   | Local component state            |
 | Durable demo records                          | Mock repository and localStorage |
 | Metrics and projections                       | Derived from authoritative data  |
@@ -182,22 +189,24 @@ For the complete reasoning and dependency rules, see [Frontend architecture](doc
 - React 19
 - Vite
 - TypeScript in strict mode
+- React Router
+- TanStack Query and Query Devtools
+- Zustand
 - Zod
 - Mock Service Worker
+- Tailwind CSS v4
+- Class Variance Authority, clsx, and tailwind-merge
+- Radix Checkbox, Select, and Tooltip primitives
+- Lucide React
 - ESLint with type-aware rules
 - Prettier
 
 ### Introduced when their roadmap step requires them
 
-- React Router
-- TanStack Query and Query Devtools
 - TanStack Table
 - React Hook Form
-- Zustand
 - Recharts
-- Tailwind CSS
-- Accessible Radix UI or shadcn-style components
-- Lucide React
+- Additional Radix primitives when a current component requires them
 - Vitest and React Testing Library
 - Playwright
 - GitHub Actions
@@ -278,24 +287,27 @@ Testing commands will be added during the approved testing roadmap steps.
 - [Version 1 requirements](docs/REQUIREMENTS.md)
 - [Frontend architecture](docs/ARCHITECTURE.md)
 - [Data flow and mock API](docs/DATA_FLOW.md)
+- [Component inventory](docs/COMPONENTS.md)
+- [Decision log](docs/DECISIONS.md)
+- [Daily progress](docs/DAILY_PROGRESS.md)
 
 The documentation records not only what is being built, but why decisions were made, where state lives, how data flows, what can fail, and how behaviour should be verified.
 
 ## Roadmap
 
-| Phase                                                | Status            |
-| ---------------------------------------------------- | ----------------- |
-| Design and Version 1 scope                           | Complete          |
-| Project setup and code-quality tooling               | Complete          |
-| Architecture and domain modelling                    | Complete          |
-| Mock API, seed data, and persistence                 | Complete          |
-| Routing and global providers                         | Awaiting approval |
-| Design system and reusable UI                        | Planned           |
-| Dashboard and incident workflows                     | Planned           |
-| Resilience, accessibility, and responsive review     | Planned           |
-| Automated testing and CI                             | Planned           |
-| Performance, deployment, and production verification | Planned           |
-| Portfolio case study and launch material             | Planned           |
+| Phase                                                | Status           |
+| ---------------------------------------------------- | ---------------- |
+| Design and Version 1 scope                           | Complete         |
+| Project setup and code-quality tooling               | Complete         |
+| Architecture and domain modelling                    | Complete         |
+| Mock API, seed data, and persistence                 | Complete         |
+| Routing and global providers                         | Complete         |
+| Design system and reusable UI                        | Final checkpoint |
+| Dashboard and incident workflows                     | Planned          |
+| Resilience, accessibility, and responsive review     | Planned          |
+| Automated testing and CI                             | Planned          |
+| Performance, deployment, and production verification | Planned          |
+| Portfolio case study and launch material             | Planned          |
 
 The roadmap is deliberately sequential: each foundation is understood, verified, and documented before the next layer is introduced.
 

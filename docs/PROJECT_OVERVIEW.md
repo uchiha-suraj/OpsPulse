@@ -362,19 +362,36 @@ The proposed stack includes:
 - GitHub Actions
 - Vercel
 
-Dependencies will be introduced only when required by the active roadmap step. Architecture and package choices remain subject to confirmation during their relevant steps.
+Dependencies are introduced only when required by the active roadmap step. React Router, TanStack Query, Tailwind CSS, Zustand, Lucide React, Class Variance Authority, and the required Radix primitives are now confirmed and implemented. Remaining package choices stay deferred to their relevant steps.
 
 ## State-ownership direction
 
 - Simulated server data: TanStack Query
 - Search, filters, sorting, and pagination: URL parameters
 - Form values and validation: React Hook Form and Zod
-- Small global interface preferences: Zustand only when justified
+- Theme preference: Zustand with guarded `localStorage` persistence
+- Other small global interface preferences: Zustand only when justified
 - Temporary interface behaviour: nearest component
 - Derived values: calculated from authoritative source data
 - Durable demo records: mock API persistence layer
 
 The same information must not be stored in multiple state systems without a documented reason.
+
+## Design-system foundation
+
+Step 9 established a domain-neutral interface foundation based on the approved Figma handoff.
+
+- Tailwind CSS v4 generates utility styles through the Vite plugin.
+- Semantic CSS tokens allow the same component classes to support dark and light themes.
+- Dark is the deterministic default theme.
+- Zustand owns the active theme; `localStorage` only persists that preference.
+- Class Variance Authority defines typed component variants.
+- `clsx` and `tailwind-merge` compose and resolve utility classes.
+- Lucide React supplies a consistent icon vocabulary.
+- Radix is installed one primitive at a time when its accessibility behaviour is required.
+- Shared UI primitives remain independent of incident, service, and dashboard business rules.
+
+The implemented generic primitives cover buttons, text controls, checkbox and select interactions, badges, avatars, cards, skeletons, alerts, tooltips, and empty states. Incident-specific badges, dashboard cards, pagination, timelines, dialogs, and toast feedback remain owned by their later feature steps.
 
 ## Version 1 success criteria
 
@@ -415,6 +432,7 @@ Version 1 succeeds when:
 - Step 5 — Project Architecture and Folder Structure: completed and approved
 - Step 6 — Domain Models and TypeScript Types: completed and approved
 - Step 7 — Mock API and Seed Data: completed and approved
-- Step 8 — Routing and Global Providers: implementation and verification complete; awaiting approval
+- Step 8 — Routing and Global Providers: completed and approved
+- Step 9 — Design System and Reusable UI Components: implementation and manual verification complete; documentation and final approval in progress
 
-Suraj approved Step 7 and explicitly started Step 8 on November 5, 2026. Step 8 routing and global-provider implementation was completed, verified, committed, and pushed on November 5, 2026. Step 9 has not started.
+Suraj approved Step 8 and explicitly started Step 9 on November 5, 2026. The Tailwind foundation, semantic tokens, theme ownership, reusable UI primitives, and development-only component gallery were implemented and manually verified in dark and light themes. Step 10 has not started.

@@ -370,7 +370,9 @@ Dependencies are introduced only when required by the active roadmap step. React
 - Search, filters, sorting, and pagination: URL parameters
 - Form values and validation: React Hook Form and Zod
 - Theme preference: Zustand with guarded `localStorage` persistence
-- Other small global interface preferences: Zustand only when justified
+- Desktop sidebar collapsed state: non-persisted Zustand layout store
+- Mobile navigation drawer: local state in the application shell
+- Menu, dialog, focus, and portal mechanics: Radix primitives
 - Temporary interface behaviour: nearest component
 - Derived values: calculated from authoritative source data
 - Durable demo records: mock API persistence layer
@@ -392,6 +394,20 @@ Step 9 established a domain-neutral interface foundation based on the approved F
 - Shared UI primitives remain independent of incident, service, and dashboard business rules.
 
 The implemented generic primitives cover buttons, text controls, checkbox and select interactions, badges, avatars, cards, skeletons, alerts, tooltips, and empty states. Incident-specific badges, dashboard cards, pagination, timelines, dialogs, and toast feedback remain owned by their later feature steps.
+
+## Responsive application-layout foundation
+
+Step 10 established the shared product shell without implementing dashboard or incident feature content.
+
+- Desktop layouts at 1024 pixels and wider use a 232-pixel sidebar that can collapse to 64 pixels and a 56-pixel top bar.
+- Layouts below 1024 pixels use a 52-pixel mobile top bar, 16-pixel content padding, and an accessible navigation drawer.
+- Version 1 navigation exposes only Dashboard and Incidents so unfinished or out-of-scope destinations are not presented as functional.
+- Desktop navigation state is global because the sidebar and shell both consume it; mobile drawer state remains local to `AppShell`.
+- Route context derives breadcrumbs, mobile titles, and back behaviour from React Router instead of duplicating the current location.
+- The shared demo-user menu exposes theme switching and a confirmed Reset Demo Data workflow.
+- The development component gallery remains outside the product shell and is still available only during development.
+
+The shell owns layout and navigation concerns only. Incident queries, dashboard data, URL filters, forms, and feature mutations remain with their later feature steps.
 
 ## Version 1 success criteria
 
@@ -433,6 +449,7 @@ Version 1 succeeds when:
 - Step 6 — Domain Models and TypeScript Types: completed and approved
 - Step 7 — Mock API and Seed Data: completed and approved
 - Step 8 — Routing and Global Providers: completed and approved
-- Step 9 — Design System and Reusable UI Components: implementation and manual verification complete; documentation and final approval in progress
+- Step 9 — Design System and Reusable UI Components: completed and approved
+- Step 10 — Responsive Application Layout: implementation and manual verification complete; documentation and final approval in progress
 
-Suraj approved Step 8 and explicitly started Step 9 on November 5, 2026. The Tailwind foundation, semantic tokens, theme ownership, reusable UI primitives, and development-only component gallery were implemented and manually verified in dark and light themes. Step 10 has not started.
+Suraj approved Step 9 and explicitly started Step 10. The responsive shell, desktop and mobile navigation, route-aware top bar, demo-user menu, Reset Demo Data action, skip link, and breakpoint behaviour were implemented and manually verified on November 6, 2026. Step 11 has not started.

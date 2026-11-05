@@ -262,6 +262,9 @@ Mutation responses return the changed incident. The global QueryClient now exist
 | Current route and route parameters             | React Router                            |
 | Active theme preference                        | Zustand theme store                     |
 | Persisted theme preference                     | `opspulse:theme` in `localStorage`      |
+| Desktop sidebar collapsed state                | Zustand layout store                    |
+| Mobile navigation drawer                       | `AppShell` local state                  |
+| Menu, dialog, focus, and portal mechanics      | Radix primitives                        |
 
 TanStack Query and React Router are now configured globally. No feature query data exists until a mounted feature uses a query hook. Incident-list query parameters and form state remain deferred to their approved feature steps.
 
@@ -307,6 +310,32 @@ Current query defaults are:
 
 Normal TanStack Query focus and reconnect behaviour remains enabled. No global query-error toast or cache mutation policy is introduced before the relevant feature and feedback steps.
 
+## Responsive navigation flow
+
+```text
+React Router location changes
+→ NavLink derives the active destination
+→ routeContext derives breadcrumbs, mobile title, and back behaviour
+→ TopBar and Sidebar render the new route context
+→ AppShell preserves the shared product frame around the matched Outlet
+```
+
+The URL remains the navigation source of truth. Desktop sidebar collapse is a non-persisted Zustand preference because both `Sidebar` and `AppShell` need it. The mobile drawer remains local to `AppShell`, closes after navigation, and also closes when the viewport crosses into the desktop layout.
+
+## Reset Demo Data flow
+
+```text
+User opens the shared user menu
+→ selects Reset Demo Data
+→ ResetDemoDataDialog asks for confirmation
+→ application API function sends POST /api/demo/reset
+→ MSW reset handler restores the validated seed snapshot
+→ successful response clears the TanStack Query cache
+→ dialog shows success and navigation returns to /dashboard
+```
+
+The dialog owns only `idle | pending | success | error` interaction state. The mock repository owns durable demo records, and TanStack Query owns cached server data. The dialog cannot close while the reset is pending. A failed request preserves the current route and displays retryable feedback instead of clearing the cache.
+
 ## Failure and debugging points
 
 1. If requests bypass MSW, verify the worker starts before React renders and confirm `mockServiceWorker.js` is registered for the application origin.
@@ -318,6 +347,9 @@ Normal TanStack Query focus and reconnect behaviour remains enabled. No global q
 7. If timestamps fail persistence validation, check their ordering against incident creation, update, and resolution times.
 8. If the theme does not persist, inspect `opspulse:theme`, confirm the stored value is `dark` or `light`, and check whether browser storage is blocked.
 9. If the theme attribute changes but colours do not, confirm `tokens.css` is imported after Tailwind in `global.css` and that components use semantic token utilities.
+10. If route titles or back controls are wrong, verify the static `/incidents/new` case is evaluated before the dynamic incident-detail pattern.
+11. If the mobile drawer stays open after resizing, verify the `matchMedia` desktop-boundary listener is active and closes local drawer state.
+12. If demo data resets but the screen remains stale, confirm the reset response succeeded before `queryClient.clear()` runs.
 
 ## Verification completed
 
@@ -340,4 +372,4 @@ Formatting, strict ESLint, TypeScript checking, and the production build pass. A
 
 ## Step boundary
 
-Step 7 implemented the mock data boundary. Step 8 added routing and the global QueryClient. Step 9 added semantic design tokens, guarded theme persistence, global tooltip timing, and domain-neutral UI primitives without fetching feature data or implementing final screens. Query hooks, URL-synchronized list controls, forms, the responsive shell, and production mutation feedback remain part of later roadmap steps.
+Step 7 implemented the mock data boundary. Step 8 added routing and the global QueryClient. Step 9 added semantic design tokens, guarded theme persistence, global tooltip timing, and domain-neutral UI primitives. Step 10 added the responsive product shell, navigation ownership, route-derived layout context, and the reset-data entry point without fetching feature data or implementing final screens. Query hooks, URL-synchronized list controls, forms, and production mutation feedback remain part of later roadmap steps.

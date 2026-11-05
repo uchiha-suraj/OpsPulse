@@ -35,12 +35,59 @@
 - Select content renders through a portal to avoid container clipping.
 - Disabled controls expose visible and native disabled behaviour.
 
-### Remaining Step 9 checkpoint work
+### Completion
 
-- Complete repository and Notion documentation synchronization.
-- Run the final formatting, linting, type-checking, and production build checks.
-- Review the final change set.
-- Create focused commits and push.
-- Receive Suraj's explicit Step 9 completion confirmation.
+Repository and Notion documentation, final quality checks, focused commits, and push were completed. Suraj explicitly confirmed Step 9 complete and approved the start of Step 10.
 
-Step 10 has not started.
+## November 6, 2026 — Step 10 responsive application layout
+
+### Completed
+
+- Added the responsive product shell around all Version 1 product routes.
+- Added the 232-pixel expanded and 64-pixel collapsed desktop sidebar.
+- Added desktop breadcrumbs and mobile route-aware titles, menu controls, and back navigation.
+- Added an accessible Radix mobile navigation drawer with focus and Escape handling.
+- Limited Version 1 navigation to Dashboard and Incidents.
+- Added the shared Ananya Rao demo-user configuration and user menu.
+- Added theme switching and confirmed Reset Demo Data access from the user menu.
+- Added the application reset API function and query-cache clearing after a successful reset.
+- Added a keyboard skip link and responsive content spacing.
+- Kept the development component gallery outside the product shell.
+- Manually verified the shell at 1440, 1024, 768, and 390 pixels.
+
+### State ownership confirmed
+
+- Active route, breadcrumbs, titles, and back destinations: React Router and derived route context
+- Desktop sidebar collapsed state: non-persisted Zustand layout store
+- Mobile drawer open state: local `AppShell` state
+- Menu, dialog, focus, and portal mechanics: Radix primitives
+- Theme: existing Zustand theme store
+- Reset request feedback: local `ResetDemoDataDialog` state
+- Durable records: existing mock repository and `localStorage`
+- Cached server data: TanStack Query
+
+### Failure and accessibility handling confirmed
+
+- Mobile drawer closes after navigation and when resizing into the desktop layout.
+- Focus is contained in open Radix overlays and Escape closes them.
+- Reset confirmation prevents accidental activation and cannot close while pending.
+- Reset failure keeps current data and exposes retryable feedback.
+- Query cache is cleared only after the reset endpoint succeeds.
+- The skip link reaches the main content without requiring pointer input.
+- Active destinations use text and structure rather than colour alone.
+
+### Verification completed
+
+- Responsive desktop, tablet, and mobile layouts
+- Sidebar collapse and content offset
+- Drawer focus, Escape, close-after-navigation, and resize behaviour
+- Route-aware titles, breadcrumbs, and mobile back actions
+- User menu, theme switching, and persisted theme
+- Reset cancellation and pending-state protection
+- Skip-link keyboard behaviour
+- Development gallery isolation
+- Formatting, strict linting, type-checking, and the production build passed
+
+The existing MSW browser chunk remains above Vite's default warning threshold. It is a non-blocking performance item for the approved optimization step and the warning threshold remains visible.
+
+Step 11 has not started.

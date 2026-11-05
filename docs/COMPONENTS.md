@@ -2,9 +2,9 @@
 
 ## Document status
 
-- Current through Step 9
-- Last updated: November 5, 2026
-- Scope: domain-neutral design-system primitives
+- Current through Step 10
+- Last updated: November 6, 2026
+- Scope: domain-neutral design-system primitives and responsive application layout
 
 ## Ownership boundary
 
@@ -79,8 +79,22 @@ The following components require real feature context and are intentionally defe
 - Dashboard charts and accessible chart summaries
 - Filter controls, active-filter chips, tables, mobile incident cards, and pagination
 - Timeline items, internal notes, metadata, and related-link sections
-- Dialog, drawer, toast, optimistic feedback, and workflow-specific form composition
-- Sidebar, header, mobile navigation, and responsive application shell
+- Feature dialogs, toast, optimistic feedback, and workflow-specific form composition
+
+## Implemented layout components
+
+| Component or module   | Purpose                                                   | State owner                                          | Important behaviour                                                          |
+| --------------------- | --------------------------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `AppShell`            | Shared responsive frame around product routes             | Local mobile-drawer state; reads layout store        | Skip link, breakpoint transition, content offset, and drawer close-on-resize |
+| `Sidebar`             | Desktop navigation and collapse controls                  | Zustand layout store                                 | Hidden below 1024 pixels; active route remains owned by React Router         |
+| `TopBar`              | Desktop breadcrumbs and mobile route controls             | React Router location; drawer callback from shell    | Mobile menu or back action is derived from the current route                 |
+| `MobileNavigation`    | Accessible small-screen route drawer                      | Controlled by `AppShell`; Radix owns focus mechanics | Focus trap, Escape close, overlay, portal, and close-after-navigation        |
+| `UserMenu`            | Demo-user identity and shared actions                     | Theme store; Radix temporary menu state              | Theme action and Reset Demo Data are available at desktop and mobile sizes   |
+| `ResetDemoDataDialog` | Confirms and reports the destructive demo-data reset      | Local request status; repository owns durable data   | Prevents close while pending and clears query cache only after success       |
+| `navigationItems`     | Defines confirmed Version 1 navigation destinations       | Static configuration                                 | Contains Dashboard and Incidents only                                        |
+| `routeContext`        | Derives breadcrumbs, mobile titles, and back destinations | React Router URL                                     | Checks the static create route before the dynamic details route              |
+
+Layout components own navigation and presentation concerns only. They do not own incident records, dashboard metrics, URL filter values, or feature form state.
 
 ## Development gallery
 
@@ -104,3 +118,20 @@ Manual verification covered:
 - Browser console review
 
 Automated unit and component coverage remains scheduled for the approved testing roadmap steps.
+
+## Step 10 verification
+
+Manual verification covered:
+
+- 1440, 1024, 768, and 390-pixel layouts
+- Expanded and collapsed desktop sidebar behaviour
+- Mobile drawer opening, focus containment, Escape closing, and navigation closing
+- Drawer cleanup when resizing from mobile to desktop
+- Active navigation, desktop breadcrumbs, mobile titles, and mobile back actions
+- User-menu identity, theme switching, and persisted theme behaviour
+- Reset Demo Data cancellation and pending-state protection
+- Keyboard skip-link behaviour
+- Development component-gallery isolation from the product shell
+- Browser console review
+
+Automated layout and accessibility coverage remains scheduled for the approved testing roadmap steps.

@@ -6,7 +6,7 @@ OpsPulse is a production-style incident-management dashboard for engineering tea
 
 This project is being built by [Suraj Adhikary](https://www.heysuraj.dev/) to demonstrate senior-level frontend engineering with React and TypeScript: clear architecture, explicit state ownership, realistic failure handling, accessibility, testing, and maintainable documentation.
 
-> **Work in progress:** the design, requirements, architecture, domain model, mock API, persistence, routing, and global query-provider foundations are implemented. Feature screens remain in development. Capabilities listed under the Version 1 scope are planned unless they also appear under “Implemented so far.”
+> **Work in progress:** the design, requirements, architecture, domain model, mock API, persistence, routing, global providers, design system, and responsive application shell are implemented. Feature screens remain in development. Capabilities listed under the Version 1 scope are planned unless they also appear under “Implemented so far.”
 
 ## Why OpsPulse?
 
@@ -82,9 +82,15 @@ These three workflows define the Version 1 boundary. New ideas are intentionally
 - Radix-powered checkbox, select, and tooltip interactions
 - Lucide icon system and typed component variants
 - Development-only component gallery for visual and keyboard verification
+- Responsive product shell with desktop and mobile navigation
+- Collapsible desktop sidebar with Dashboard and Incidents routes
+- Accessible mobile navigation drawer with focus management and Escape handling
+- Route-aware desktop breadcrumbs, mobile titles, and mobile back navigation
+- Demo-user menu with theme switching and confirmed Reset Demo Data action
+- Skip link and responsive content spacing for keyboard and mobile use
 - Documented requirements, architecture, state ownership, and failure boundaries
 
-**Step 9 — Design System and Reusable UI Components** is implemented and manually verified. Documentation and the final project-owner checkpoint are in progress.
+**Step 10 — Responsive Application Layout** is implemented and manually verified. Documentation and the final project-owner checkpoint are in progress.
 
 ## Version 1 scope
 
@@ -159,7 +165,9 @@ This boundary keeps presentation components independent from browser storage. A 
 | Search, filters, sorting, page, and page size | URL parameters                   |
 | Form values and validation                    | React Hook Form and Zod          |
 | Theme preference                              | Zustand with local persistence   |
-| Other small global interface preferences      | Zustand, only when justified     |
+| Desktop sidebar collapsed state               | Zustand layout store             |
+| Mobile navigation drawer                      | AppShell local component state   |
+| Menu, dialog, and focus interaction details   | Radix primitives                 |
 | Temporary interaction state                   | Local component state            |
 | Durable demo records                          | Mock repository and localStorage |
 | Metrics and projections                       | Derived from authoritative data  |
@@ -196,7 +204,7 @@ For the complete reasoning and dependency rules, see [Frontend architecture](doc
 - Mock Service Worker
 - Tailwind CSS v4
 - Class Variance Authority, clsx, and tailwind-merge
-- Radix Checkbox, Select, and Tooltip primitives
+- Radix Checkbox, Select, Tooltip, Dialog, and Dropdown Menu primitives
 - Lucide React
 - ESLint with type-aware rules
 - Prettier
@@ -302,7 +310,8 @@ The documentation records not only what is being built, but why decisions were m
 | Architecture and domain modelling                    | Complete         |
 | Mock API, seed data, and persistence                 | Complete         |
 | Routing and global providers                         | Complete         |
-| Design system and reusable UI                        | Final checkpoint |
+| Design system and reusable UI                        | Complete         |
+| Responsive application layout                        | Final checkpoint |
 | Dashboard and incident workflows                     | Planned          |
 | Resilience, accessibility, and responsive review     | Planned          |
 | Automated testing and CI                             | Planned          |

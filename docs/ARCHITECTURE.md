@@ -2,12 +2,12 @@
 
 ## Document status
 
-- Roadmap coverage: Steps 5–6 — Architecture and Domain Models
-- Status: Approved through Step 6 on September 15, 2026
+- Roadmap coverage: Steps 5–10
+- Status: Current through Step 10 implementation
 - Version covered: Version 1
 - Owner: Suraj Adhikary
 - Architecture style: Feature-based modular frontend
-- Last reviewed: September 15, 2026
+- Last reviewed: November 6, 2026
 
 ## Purpose
 
@@ -63,6 +63,8 @@ This provides clearer ownership than global folders such as `pages`, `api`, and 
 ```text
 src/
 ├── app/
+│   ├── api/
+│   │   └── resetDemoData.ts
 │   ├── dev/
 │   │   └── ComponentGalleryPage.tsx
 │   ├── providers/
@@ -76,11 +78,21 @@ src/
 │   │   ├── paths.ts
 │   │   └── router.tsx
 │   ├── stores/
+│   │   ├── layoutStore.ts
 │   │   └── themeStore.ts
 │   ├── theme/
 │   │   └── applyTheme.ts
 │   └── App.tsx
 ├── components/
+│   ├── layout/
+│   │   ├── AppShell.tsx
+│   │   ├── MobileNavigation.tsx
+│   │   ├── ResetDemoDataDialog.tsx
+│   │   ├── Sidebar.tsx
+│   │   ├── TopBar.tsx
+│   │   ├── UserMenu.tsx
+│   │   ├── navigationItems.ts
+│   │   └── routeContext.ts
 │   └── ui/
 │       ├── Alert.tsx
 │       ├── Avatar.tsx
@@ -104,6 +116,8 @@ src/
 │       └── IncidentListPage.tsx
 ├── lib/
 │   ├── api/
+│   ├── config/
+│   │   └── demoUser.ts
 │   └── utils/
 │       └── cn.ts
 ├── mocks/
@@ -119,7 +133,7 @@ src/
 └── main.tsx
 ```
 
-The project now contains the application composition root, global query and theme providers, route configuration, feature-owned route placeholders, shared domain contracts, the mock API boundary, semantic design tokens, and reusable domain-neutral UI primitives. Additional folders will be introduced during the roadmap step that first needs them.
+The project now contains the application composition root, global query and theme providers, route configuration, a responsive product shell, feature-owned route placeholders, shared domain contracts, the mock API boundary, semantic design tokens, and reusable domain-neutral UI primitives. Additional folders will be introduced during the roadmap step that first needs them.
 
 Empty folders and placeholder `.gitkeep` files must not be added.
 
@@ -205,15 +219,18 @@ Feature pages may be imported by the router, but feature components must not con
 
 ### `src/components/layout`
 
-Will contain reusable application-layout components such as:
+Contains reusable application-layout and navigation components:
 
-- Application shell
-- Sidebar
-- Header
-- Page container
-- Responsive navigation
+- `AppShell.tsx` composes the desktop sidebar, responsive top bar, page content, skip link, and mobile-drawer state.
+- `Sidebar.tsx` renders desktop navigation and consumes only the collapsed layout preference.
+- `TopBar.tsx` renders route-derived breadcrumbs, mobile titles, and mobile menu or back actions.
+- `MobileNavigation.tsx` provides the accessible small-screen navigation drawer.
+- `UserMenu.tsx` composes demo-user identity, theme switching, and the reset-data action.
+- `ResetDemoDataDialog.tsx` owns confirmation and request feedback for the destructive demo reset.
+- `navigationItems.ts` defines the confirmed Version 1 destinations.
+- `routeContext.ts` derives presentation context from the current URL.
 
-Layout components may compose shared UI primitives but must not own incident-management business logic.
+Layout components may compose shared UI primitives and application actions, but they must not own incident-management business logic, query data, URL filters, or form state.
 
 ### `src/components/ui`
 
@@ -496,12 +513,13 @@ Each piece of state must have one authoritative owner.
 | Form state             | React Hook Form            | Create, edit, note, timeline, resolution forms |
 | Form validation        | Zod schemas                | Required fields and domain validation          |
 | Theme preference       | Zustand                    | Dark or light mode with guarded persistence    |
-| Other global UI state  | Zustand when justified     | Collapsed navigation when Step 10 requires it  |
-| Temporary UI state     | Nearest component          | Open menu, selected tab, local disclosure      |
+| Desktop layout state   | Zustand layout store       | Collapsed or expanded sidebar                  |
+| Mobile drawer state    | `AppShell` local state     | Open or closed navigation drawer               |
+| Interaction mechanics  | Radix or nearest component | Menu, dialog, focus, portal, local disclosure  |
 | Derived data           | Calculated from its source | Active counts and filtered summaries           |
 | Durable demo records   | Mock persistence layer     | Created and updated incidents                  |
 
-TanStack Query owns simulated server state. Zustand now owns only the theme preference. The theme store persists one validated `dark | light` value under `opspulse:theme`; browser storage is persistence, not a second runtime state owner.
+TanStack Query owns simulated server state. Zustand owns the theme preference and the small cross-component desktop-sidebar preference in separate stores. Only the validated `dark | light` theme value is persisted under `opspulse:theme`; sidebar collapse intentionally resets between sessions. Browser storage is persistence, not a second runtime state owner.
 
 The same value must not be independently stored in multiple state systems unless the reason is documented.
 
@@ -536,7 +554,8 @@ index.html
 → ThemeProvider synchronizes future theme changes
 → Tooltip Provider supplies shared interaction timing
 → RouterProvider reads the browser URL
-→ AppRoot renders the matched child route through Outlet
+→ AppRoot renders AppShell
+→ AppShell composes Sidebar, TopBar, and the matched child route through Outlet
 → feature-owned route page renders
 ```
 
@@ -554,10 +573,12 @@ index.html
 → TooltipProvider
 → RouterProvider
 → AppRoot
+→ AppShell
+→ Sidebar + TopBar + matched Outlet
 → matched route page
 ```
 
-The router is created once outside the React render tree. The QueryClient is also created once at module scope so application renders and navigation cannot discard the cache. Theme changes update one Zustand value and the document's `data-theme` attribute; semantic CSS variables then restyle descendants without duplicating theme state. The responsive application layout will wrap `AppRoot`'s outlet during Step 10.
+The router is created once outside the React render tree. The QueryClient is also created once at module scope so application renders and navigation cannot discard the cache. Theme changes update one Zustand value and the document's `data-theme` attribute; semantic CSS variables then restyle descendants without duplicating theme state. `AppShell` wraps product routes, while the development-only component gallery remains a top-level route outside the shell.
 
 The confirmed Version 1 route map is:
 
@@ -772,12 +793,25 @@ Implemented during Step 9:
 - A development-only lazy route exposes the component gallery without adding a production route.
 - Dark theme, light theme, persistence, focus, keyboard controls, loading, disabled, validation, indeterminate, select, and tooltip behaviour were manually verified.
 
+Implemented during Step 10:
+
+- `AppShell` provides the shared responsive product frame and keyboard skip link.
+- Desktop layouts use a collapsible 232-pixel or 64-pixel sidebar and a 56-pixel top bar.
+- Layouts below 1024 pixels use a 52-pixel top bar and an accessible Radix navigation drawer.
+- Version 1 navigation exposes only Dashboard and Incidents.
+- React Router remains the source of truth for active navigation, breadcrumbs, mobile titles, and back behaviour.
+- Zustand owns only the non-persisted desktop-sidebar preference; `AppShell` locally owns the mobile drawer.
+- The shared Ananya Rao demo-user configuration is reused by mock data and the application menu.
+- The Reset Demo Data action uses the application API boundary, confirmation, pending/error/success feedback, and QueryClient clearing.
+- The development component gallery remains outside the product shell.
+- Desktop, tablet, and mobile widths; collapse; drawer focus; Escape; resize; route context; theme; reset confirmation; skip link; and gallery isolation were manually verified.
+
 Not yet implemented:
 
 - Functional feature modules beyond route ownership
 - URL-synchronized incident-list controls
 - Query hooks and API service functions
-- Form and global UI state libraries
+- Form libraries
 - Testing libraries
 - Production feature workflows
 
@@ -842,4 +876,8 @@ The routing and global-provider implementation was completed and pushed in `f9f0
 
 ## Step 9 completion status
 
-The design-system implementation and manual component-gallery verification were completed on November 5, 2026. Documentation, Notion synchronization, the final quality run, commit, push, and Suraj's explicit completion approval remain before Step 9 can be marked complete. Step 10 has not started.
+The design-system implementation, documentation, verification, commit, and push were completed on November 5, 2026. Suraj explicitly approved Step 9 and started Step 10.
+
+## Step 10 completion status
+
+The responsive application-layout implementation, manual verification, repository and Notion documentation synchronization, and final formatting, linting, type-checking, and production-build checks were completed on November 6, 2026. Focused commits, push, and Suraj's explicit completion approval remain before Step 10 can be marked complete. Step 11 has not started.

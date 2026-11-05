@@ -291,15 +291,18 @@ Testing commands will be added during the approved testing roadmap steps.
 
 ## Documentation
 
+- [Documentation guide](docs/README.md)
 - [Project overview](docs/PROJECT_OVERVIEW.md)
 - [Version 1 requirements](docs/REQUIREMENTS.md)
 - [Frontend architecture](docs/ARCHITECTURE.md)
 - [Data flow and mock API](docs/DATA_FLOW.md)
+- [Workflow and code flow](docs/WORKFLOWS.md)
 - [Component inventory](docs/COMPONENTS.md)
 - [Decision log](docs/DECISIONS.md)
+- [Debugging guide](docs/DEBUGGING.md)
 - [Daily progress](docs/DAILY_PROGRESS.md)
 
-The documentation records not only what is being built, but why decisions were made, where state lives, how data flows, what can fail, and how behaviour should be verified.
+The repository is the single source of truth for OpsPulse documentation. It records not only what is being built, but why decisions were made, where state lives, how data flows, which functions execute each workflow, what can fail, and how behaviour should be verified.
 
 ## Roadmap
 

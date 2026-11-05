@@ -1,5 +1,24 @@
 # OpsPulse — Daily Progress
 
+## Completed roadmap summary
+
+| Step | Completed                            | Evidence                         |
+| ---- | ------------------------------------ | -------------------------------- |
+| 1    | Figma Design                         | Approved implementation baseline |
+| 2    | Requirements and Scope               | Approved September 7, 2026       |
+| 3    | React, TypeScript and GitHub Setup   | Approved September 7, 2026       |
+| 4    | Code Quality and Development Tooling | Approved September 7, 2026       |
+| 5    | Architecture and Folder Structure    | Approved September 15, 2026      |
+| 6    | Domain Models and TypeScript Types   | Approved September 15, 2026      |
+| 7    | Mock API and Seed Data               | Approved November 5, 2026        |
+| 8    | Routing and Global Providers         | Approved November 5, 2026        |
+| 9    | Design System and Reusable UI        | Approved November 5, 2026        |
+| 10   | Responsive Application Layout        | Approved November 6, 2026        |
+
+Detailed requirements, architecture, decisions, workflows, and debugging guidance
+belong in their dedicated documents. This log records concise checkpoints and
+verification evidence only.
+
 ## November 5, 2026 — Step 9 design-system implementation
 
 ### Completed
@@ -37,7 +56,9 @@
 
 ### Completion
 
-Repository and Notion documentation, final quality checks, focused commits, and push were completed. Suraj explicitly confirmed Step 9 complete and approved the start of Step 10.
+Repository documentation, final quality checks, focused commits, and push were
+completed. Suraj explicitly confirmed Step 9 complete and approved the start of
+Step 10.
 
 ## November 6, 2026 — Step 10 responsive application layout
 
@@ -92,4 +113,24 @@ The existing MSW browser chunk remains above Vite's default warning threshold. I
 
 ### Completion
 
-The responsive layout implementation, manual verification, repository and Notion documentation, final quality checks, focused commits, and push are complete. Suraj explicitly confirmed Step 10 complete on November 6, 2026. Step 11 has not started.
+The responsive layout implementation, manual verification, repository
+documentation, final quality checks, focused commits, and push are complete.
+Suraj explicitly confirmed Step 10 complete on November 6, 2026. Step 11 has not
+started.
+
+## November 6, 2026 — Repository documentation consolidation
+
+### Completed
+
+- Made the repository the single documentation source and retired Notion from the
+  maintenance workflow.
+- Added a documentation index with reading order and ownership rules.
+- Added an implemented workflow and function-call guide.
+- Added a debugging guide organized by state and system boundaries.
+- Migrated the full roadmap status and missing durable decisions from Notion.
+- Kept historical progress concise instead of copying the complete Notion log.
+
+### Documentation boundary
+
+No product feature or runtime behaviour changed. Step 11 implementation remains
+not started.

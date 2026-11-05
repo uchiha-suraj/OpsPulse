@@ -3,7 +3,7 @@
 ## Document status
 
 - Roadmap coverage: Steps 5–10
-- Status: Current through Step 10 implementation
+- Status: Current through completed and approved Step 10
 - Version covered: Version 1
 - Owner: Suraj Adhikary
 - Architecture style: Feature-based modular frontend
@@ -724,7 +724,7 @@ Before changing a boundary:
 2. Identify the responsible module.
 3. Compare the smallest viable alternatives.
 4. Record meaningful trade-offs.
-5. Update this document and the Notion Decision Log.
+5. Update this document and `docs/DECISIONS.md`.
 6. Make the change in a focused commit.
 7. Run the complete quality checks.
 
@@ -822,10 +822,10 @@ These will be added only during their approved roadmap steps.
 - `docs/PROJECT_OVERVIEW.md`
 - `docs/REQUIREMENTS.md`
 - `docs/DATA_FLOW.md`
+- `docs/WORKFLOWS.md`
 - `docs/COMPONENTS.md`
-- `docs/DEBUGGING.md` when implemented
-- Notion Architecture and Data Flow page
-- Notion Decision Log
+- `docs/DECISIONS.md`
+- `docs/DEBUGGING.md`
 
 ## Step 5 completion criteria
 
@@ -841,7 +841,7 @@ Step 5 can be completed when:
 - The architecture document has been reviewed.
 - Formatting, linting, type-checking, and building pass.
 - The change has a focused Git commit.
-- Relevant Notion pages are updated.
+- Relevant repository documentation is updated.
 - Suraj explicitly confirms Step 5 complete.
 
 ## Step 6 completion criteria
@@ -880,4 +880,8 @@ The design-system implementation, documentation, verification, commit, and push 
 
 ## Step 10 completion status
 
-The responsive application-layout implementation, manual verification, repository and Notion documentation synchronization, and final formatting, linting, type-checking, and production-build checks were completed on November 6, 2026. The implementation and documentation commits were pushed, and Suraj explicitly confirmed Step 10 complete. Step 11 has not started.
+The responsive application-layout implementation, manual verification,
+documentation synchronization, and final formatting, linting, type-checking,
+and production-build checks were completed on November 6, 2026. The
+implementation and documentation commits were pushed, and Suraj explicitly
+confirmed Step 10 complete. Step 11 has not started.

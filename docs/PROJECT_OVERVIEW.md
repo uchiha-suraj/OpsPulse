@@ -2,9 +2,9 @@
 
 ## Document status
 
-- Roadmap step: Step 2 — Project Requirements and Scope Documentation
-- Status: Approved on September 7, 2026
-- Implementation status: Domain-model baseline completed through Step 6
+- Roadmap coverage: Version 1, current through Step 11 preparation
+- Status: Steps 1–10 completed and approved; Step 11 implementation not started
+- Last reviewed: November 6, 2026
 - Design status: Approved as the implementation baseline
 - Version covered: Version 1
 
@@ -441,15 +441,52 @@ Version 1 succeeds when:
 
 ## Current status
 
-- Step 1 — Figma Design: completed
-- Step 2 — Project Requirements and Scope Documentation: completed and approved
-- Step 3 — React, TypeScript and GitHub Setup: completed and approved
-- Step 4 — Code Quality and Development Tooling: completed and approved
-- Step 5 — Project Architecture and Folder Structure: completed and approved
-- Step 6 — Domain Models and TypeScript Types: completed and approved
-- Step 7 — Mock API and Seed Data: completed and approved
-- Step 8 — Routing and Global Providers: completed and approved
-- Step 9 — Design System and Reusable UI Components: completed and approved
-- Step 10 — Responsive Application Layout: completed and approved
+| Step | Roadmap item                                  | Status                                        |
+| ---- | --------------------------------------------- | --------------------------------------------- |
+| 1    | Figma Design                                  | Complete                                      |
+| 2    | Project Requirements and Scope Documentation  | Complete                                      |
+| 3    | React, TypeScript and GitHub Setup            | Complete                                      |
+| 4    | Code Quality and Development Tooling          | Complete                                      |
+| 5    | Project Architecture and Folder Structure     | Complete                                      |
+| 6    | Domain Models and TypeScript Types            | Complete                                      |
+| 7    | Mock API and Seed Data                        | Complete                                      |
+| 8    | Routing and Global Providers                  | Complete                                      |
+| 9    | Design System and Reusable UI Components      | Complete                                      |
+| 10   | Responsive Application Layout                 | Complete                                      |
+| 11   | Operations Dashboard                          | Approved to begin; implementation not started |
+| 12   | Incident List, Search and Filters             | Planned                                       |
+| 13   | Incident Details and Timeline                 | Planned                                       |
+| 14   | Create and Update Incident Workflows          | Planned                                       |
+| 15   | Loading, Empty, Error and Offline States      | Planned                                       |
+| 16   | Accessibility and Responsive Review           | Planned                                       |
+| 17   | Unit and Component Testing                    | Planned                                       |
+| 18   | End-to-End Testing                            | Planned                                       |
+| 19   | GitHub Actions and CI                         | Planned                                       |
+| 20   | Performance and Lighthouse Optimization       | Planned                                       |
+| 21   | Deployment and Production Verification        | Planned                                       |
+| 22   | Project Documentation and Architecture Review | Planned                                       |
+| 23   | GitHub Open-Source Preparation                | Planned                                       |
+| 24   | Demo Video and Screenshots                    | Planned                                       |
+| 25   | Portfolio Case Study and Launch Posts         | Planned                                       |
 
-Suraj approved Step 9 and explicitly started Step 10. The responsive shell, desktop and mobile navigation, route-aware top bar, demo-user menu, Reset Demo Data action, skip link, and breakpoint behaviour were implemented and manually verified on November 6, 2026. The repository and Notion documentation were synchronized, all final quality checks passed, the focused commits were pushed, and Suraj explicitly confirmed Step 10 complete. Step 11 has not started.
+The responsive shell, desktop and mobile navigation, route-aware top bar,
+demo-user menu, Reset Demo Data action, skip link, and breakpoint behaviour were
+implemented and manually verified on November 6, 2026. All final quality checks
+passed, the focused commits were pushed, and Suraj explicitly confirmed Step 10
+complete.
+
+## Repository documentation policy
+
+The repository is the only maintained OpsPulse documentation system. Notion is
+retired from the workflow.
+
+- `docs/README.md` is the documentation entry point.
+- Requirements define expected behaviour and acceptance criteria.
+- Architecture and Data Flow define ownership and boundaries.
+- Workflow and Code Flow explains function call order for implemented behaviour.
+- Decisions preserve accepted choices, alternatives, and rationale.
+- Debugging maps failures to owners and recovery steps.
+- Daily Progress stores concise evidence rather than duplicating design documents.
+
+Every important feature must update its workflow, ownership, failure, debugging,
+verification, and decision documentation before its roadmap step is complete.

@@ -1,0 +1,136 @@
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --op-color-canvas: #0b0f17;
+  --op-color-surface: #111722;
+  --op-color-surface-raised: #171e2b;
+  --op-color-sidebar: #0d121b;
+
+  --op-color-border: #232c3b;
+  --op-color-border-strong: #33405a;
+  --op-color-focus-ring: #7da2ff;
+
+  --op-color-foreground: #f1f4f9;
+  --op-color-foreground-secondary: #a3adbe;
+  --op-color-foreground-muted: #6b7689;
+  --op-color-foreground-on-accent: #ffffff;
+
+  --op-color-accent: #4f7cff;
+  --op-color-accent-hover: #6b92ff;
+  --op-color-accent-subtle: #1a2540;
+
+  --op-color-success: #22c55e;
+  --op-color-warning: #f59e0b;
+  --op-color-critical: #ef4444;
+  --op-color-info: #22d3ee;
+
+  --op-color-success-subtle: #0f2a1d;
+  --op-color-warning-subtle: #2e2109;
+  --op-color-critical-subtle: #331313;
+  --op-color-info-subtle: #0b2a30;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --op-color-canvas: #f5f7fa;
+  --op-color-surface: #ffffff;
+  --op-color-surface-raised: #f8fafc;
+  --op-color-sidebar: #ffffff;
+
+  --op-color-border: #e3e7ec;
+  --op-color-border-strong: #cbd5e1;
+  --op-color-focus-ring: #3b63e8;
+
+  --op-color-foreground: #0f172a;
+  --op-color-foreground-secondary: #4b5563;
+  --op-color-foreground-muted: #6b7280;
+  --op-color-foreground-on-accent: #ffffff;
+
+  --op-color-accent: #3b63e8;
+  --op-color-accent-hover: #3154c6;
+  --op-color-accent-subtle: #e8edff;
+
+  --op-color-success: #16a34a;
+  --op-color-warning: #d97706;
+  --op-color-critical: #dc2626;
+  --op-color-info: #0891b2;
+
+  --op-color-success-subtle: #dcfce7;
+  --op-color-warning-subtle: #fef3c7;
+  --op-color-critical-subtle: #fee2e2;
+  --op-color-info-subtle: #cffafe;
+}
+
+@theme inline {
+  --font-sans:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', sans-serif;
+
+  --color-canvas: var(--op-color-canvas);
+  --color-surface: var(--op-color-surface);
+  --color-surface-raised: var(--op-color-surface-raised);
+  --color-sidebar: var(--op-color-sidebar);
+
+  --color-border: var(--op-color-border);
+  --color-border-strong: var(--op-color-border-strong);
+  --color-focus-ring: var(--op-color-focus-ring);
+
+  --color-foreground: var(--op-color-foreground);
+  --color-foreground-secondary: var(--op-color-foreground-secondary);
+  --color-foreground-muted: var(--op-color-foreground-muted);
+  --color-foreground-on-accent: var(--op-color-foreground-on-accent);
+
+  --color-accent: var(--op-color-accent);
+  --color-accent-hover: var(--op-color-accent-hover);
+  --color-accent-subtle: var(--op-color-accent-subtle);
+
+  --color-success: var(--op-color-success);
+  --color-warning: var(--op-color-warning);
+  --color-critical: var(--op-color-critical);
+  --color-info: var(--op-color-info);
+
+  --color-success-subtle: var(--op-color-success-subtle);
+  --color-warning-subtle: var(--op-color-warning-subtle);
+  --color-critical-subtle: var(--op-color-critical-subtle);
+  --color-info-subtle: var(--op-color-info-subtle);
+
+  --color-severity-1: #ef4444;
+  --color-severity-2: #f97316;
+  --color-severity-3: #f59e0b;
+  --color-severity-4: #4f7cff;
+
+  --text-display: 2rem;
+  --text-display--line-height: 2.5rem;
+  --text-display--letter-spacing: -0.03125rem;
+
+  --text-heading-lg: 1.5rem;
+  --text-heading-lg--line-height: 2rem;
+  --text-heading-lg--letter-spacing: -0.01875rem;
+
+  --text-heading-md: 1.25rem;
+  --text-heading-md--line-height: 1.75rem;
+  --text-heading-md--letter-spacing: -0.0125rem;
+
+  --text-heading-sm: 1rem;
+  --text-heading-sm--line-height: 1.5rem;
+
+  --text-body-lg: 0.875rem;
+  --text-body-lg--line-height: 1.25rem;
+
+  --text-body: 0.8125rem;
+  --text-body--line-height: 1.125rem;
+
+  --text-label: 0.75rem;
+  --text-label--line-height: 1rem;
+
+  --text-label-xs: 0.6875rem;
+  --text-label-xs--line-height: 0.875rem;
+
+  --radius-badge: 0.25rem;
+  --radius-control: 0.375rem;
+  --radius-card: 0.5rem;
+  --radius-modal: 0.75rem;
+  --radius-round: 9999px;
+}

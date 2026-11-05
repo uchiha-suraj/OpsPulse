@@ -2,6 +2,10 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import App from '@/app/App'
 import '@/styles/global.css'
+import { useThemeStore } from '@/app/stores/themeStore'
+import { applyThemeToDocument } from '@/app/theme/applyTheme'
+
+applyThemeToDocument(useThemeStore.getState().theme)
 
 const rootElement = document.getElementById('root')
 

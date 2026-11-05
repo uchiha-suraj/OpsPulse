@@ -90,7 +90,7 @@ These three workflows define the Version 1 boundary. New ideas are intentionally
 - Skip link and responsive content spacing for keyboard and mobile use
 - Documented requirements, architecture, state ownership, and failure boundaries
 
-**Step 10 — Responsive Application Layout** is implemented and manually verified. Documentation and the final project-owner checkpoint are in progress.
+**Step 10 — Responsive Application Layout** is complete, verified, documented, and approved. Step 11 has not started.
 
 ## Version 1 scope
 
@@ -303,20 +303,20 @@ The documentation records not only what is being built, but why decisions were m
 
 ## Roadmap
 
-| Phase                                                | Status           |
-| ---------------------------------------------------- | ---------------- |
-| Design and Version 1 scope                           | Complete         |
-| Project setup and code-quality tooling               | Complete         |
-| Architecture and domain modelling                    | Complete         |
-| Mock API, seed data, and persistence                 | Complete         |
-| Routing and global providers                         | Complete         |
-| Design system and reusable UI                        | Complete         |
-| Responsive application layout                        | Final checkpoint |
-| Dashboard and incident workflows                     | Planned          |
-| Resilience, accessibility, and responsive review     | Planned          |
-| Automated testing and CI                             | Planned          |
-| Performance, deployment, and production verification | Planned          |
-| Portfolio case study and launch material             | Planned          |
+| Phase                                                | Status   |
+| ---------------------------------------------------- | -------- |
+| Design and Version 1 scope                           | Complete |
+| Project setup and code-quality tooling               | Complete |
+| Architecture and domain modelling                    | Complete |
+| Mock API, seed data, and persistence                 | Complete |
+| Routing and global providers                         | Complete |
+| Design system and reusable UI                        | Complete |
+| Responsive application layout                        | Complete |
+| Dashboard and incident workflows                     | Planned  |
+| Resilience, accessibility, and responsive review     | Planned  |
+| Automated testing and CI                             | Planned  |
+| Performance, deployment, and production verification | Planned  |
+| Portfolio case study and launch material             | Planned  |
 
 The roadmap is deliberately sequential: each foundation is understood, verified, and documented before the next layer is introduced.
 

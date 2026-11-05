@@ -13,7 +13,7 @@ import { RouteErrorPage } from './RouteErrorPage'
 const developmentRoutes: RouteObject[] = import.meta.env.DEV
   ? [
       {
-        path: 'dev/components',
+        path: '/dev/components',
         lazy: async () => {
           const { ComponentGalleryPage } =
             await import('@/app/dev/ComponentGalleryPage')
@@ -27,6 +27,7 @@ const developmentRoutes: RouteObject[] = import.meta.env.DEV
   : []
 
 export const router = createBrowserRouter([
+  ...developmentRoutes,
   {
     path: APP_PATHS.root,
     Component: AppRoot,
@@ -52,7 +53,6 @@ export const router = createBrowserRouter([
         path: APP_PATHS.incidentDetails,
         Component: IncidentDetailsPage,
       },
-      ...developmentRoutes,
       {
         path: '*',
         Component: NotFoundPage,

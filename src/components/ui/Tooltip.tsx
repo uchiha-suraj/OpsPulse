@@ -18,6 +18,7 @@ type TooltipProps = Omit<
   contentClassName?: string
   side?: TooltipContentProps['side']
   sideOffset?: number
+  disabled?: boolean
 }
 
 export function Tooltip({
@@ -25,10 +26,15 @@ export function Tooltip({
   children,
   content,
   contentClassName,
+  disabled = false,
   side = 'top',
   sideOffset = 6,
   ...props
 }: TooltipProps) {
+  if (disabled) {
+    return children
+  }
+
   return (
     <TooltipPrimitive.Root {...props}>
       <TooltipPrimitive.Trigger asChild>{children}</TooltipPrimitive.Trigger>

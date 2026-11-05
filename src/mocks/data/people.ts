@@ -1,13 +1,8 @@
 import type { Person } from '@/types/person'
+import { DEMO_USER } from '@/lib/config/demoUser'
 
 export const PEOPLE_SEED = [
-  {
-    id: 'person-ananya-rao',
-    name: 'Ananya Rao',
-    initials: 'AR',
-    role: 'SRE / Incident Responder',
-    availability: 'on-call',
-  },
+  DEMO_USER,
   {
     id: 'person-marco-ruiz',
     name: 'Marco Ruiz',
